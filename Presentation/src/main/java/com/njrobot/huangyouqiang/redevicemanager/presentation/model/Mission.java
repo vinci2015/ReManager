@@ -64,7 +64,7 @@ public class Mission {
         sb.append("id : "+this.getId()+"\n");
         sb.append("userId :"+this.getUserId()+"\n");
         sb.append("priority :"+this.getPriority()+"\n");
-        sb.append("destinationSiteName :"+this.getDestinationSite()+"\n");
+        sb.append("site name :"+this.getDestinationSite()+"\n");
         sb.append("*********************************");
         return sb.toString();
     }

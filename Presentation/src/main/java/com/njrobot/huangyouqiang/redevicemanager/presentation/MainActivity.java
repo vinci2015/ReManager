@@ -1,5 +1,6 @@
 package com.njrobot.huangyouqiang.redevicemanager.presentation;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +16,11 @@ import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.DefaultSubscr
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetMissionDetails;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.model.Mission;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.view.activity.MissionInfoActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private UseCase useCase;
     private ThreadExecutor threadExecutor;
     private TextView textView;
@@ -47,14 +50,19 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onNext(MissionEntity entity) {
-            Log.i("mainactivity","onNext()");
-            Mission mission = Mission.transform(entity);
-            textView.setText(mission.toString());
+            if(entity != null) {
+                Log.i("mainactivity", "onNext()");
+                Mission mission = Mission.transform(entity);
+                textView.setText(mission.toString());
+            }else{
+                Log.i(TAG,"mission list is empty!!");
+            }
         }
     }
 
     public void doRequest(View view){
-        useCase.execute(new GetMissionSubscriber());
+        //useCase.execute(new GetMissionSubscriber());
+        startActivity(new Intent(MainActivity.this, MissionInfoActivity.class));
     }
 }
 

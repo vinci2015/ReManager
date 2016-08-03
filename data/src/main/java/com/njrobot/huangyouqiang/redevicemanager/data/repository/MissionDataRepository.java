@@ -6,6 +6,8 @@ import com.njrobot.huangyouqiang.redevicemanager.data.repository.datasource.Miss
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.repository.MissionRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -14,6 +16,7 @@ import rx.Observable;
 public class MissionDataRepository implements MissionRepository {
     private MissionDataStoreFactory missionDataStoreFactory;
 
+    @Inject
     public MissionDataRepository(MissionDataStoreFactory missionDataStoreFactory) {
         this.missionDataStoreFactory = missionDataStoreFactory;
     }

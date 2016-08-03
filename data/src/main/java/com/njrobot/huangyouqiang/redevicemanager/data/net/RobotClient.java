@@ -54,6 +54,9 @@ public class RobotClient{
 				.map(new Func1<ResMissionList, MissionEntity>() {
 					@Override
 					public MissionEntity call(ResMissionList resMissionList) {
+						if(resMissionList.getMission_list().isEmpty()){
+							return null;
+						}
 						return resMissionList.getMission_list().get(0);
 					}
 				});

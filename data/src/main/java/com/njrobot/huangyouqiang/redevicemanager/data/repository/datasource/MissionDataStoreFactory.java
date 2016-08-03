@@ -4,12 +4,15 @@ import android.content.Context;
 
 import com.njrobot.huangyouqiang.redevicemanager.data.net.RobotClient;
 
+import javax.inject.Inject;
+
 /**
  * Created by huangyouqiang on 2016/7/29.
  */
 public class MissionDataStoreFactory {
     private Context context;
 
+    @Inject
     public MissionDataStoreFactory(Context context){
         if(context == null){
             throw new IllegalArgumentException("argunment is illegal!");

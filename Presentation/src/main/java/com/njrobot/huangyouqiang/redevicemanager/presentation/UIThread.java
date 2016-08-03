@@ -18,6 +18,8 @@ package com.njrobot.huangyouqiang.redevicemanager.presentation;
 import com.njrobot.huangyouqiang.redevicemanager.domain.executor.PostExecutorThread;
 
 
+import javax.inject.Inject;
+
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -27,6 +29,7 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class UIThread implements PostExecutorThread {
 
+  @Inject
   public UIThread() {}
 
   @Override

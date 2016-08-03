@@ -24,6 +24,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 
 /**
  * Decorated {@link java.util.concurrent.ThreadPoolExecutor}
@@ -45,6 +47,7 @@ public class JobExecutor implements ThreadExecutor {
 
   private final ThreadFactory threadFactory;
 
+  @Inject
   public JobExecutor() {
     this.workQueue = new LinkedBlockingQueue<>();
     this.threadFactory = new JobThreadFactory();

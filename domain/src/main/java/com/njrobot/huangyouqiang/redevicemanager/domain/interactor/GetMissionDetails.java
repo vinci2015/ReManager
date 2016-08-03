@@ -5,6 +5,8 @@ import com.njrobot.huangyouqiang.redevicemanager.domain.executor.PostExecutorThr
 import com.njrobot.huangyouqiang.redevicemanager.domain.executor.ThreadExecutor;
 import com.njrobot.huangyouqiang.redevicemanager.domain.repository.MissionRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -13,6 +15,7 @@ import rx.Observable;
 public class GetMissionDetails extends UseCase {
     private MissionRepository missionRepository;
 
+    @Inject
     public GetMissionDetails(MissionRepository missionRepository,ThreadExecutor threadExecutor,
                                 PostExecutorThread postExecutorThread) {
         super(threadExecutor, postExecutorThread);

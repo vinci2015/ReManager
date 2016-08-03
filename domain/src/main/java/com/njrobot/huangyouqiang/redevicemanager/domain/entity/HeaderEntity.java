@@ -23,7 +23,7 @@ public class HeaderEntity {
 		this.userId = 2;
 	}
 
-	// 请求处理的错误码, code = 0 值表示正确处理,“info”: (string) // 错误描述字符串
+	// 请求处理的错误码,code = 0 表示正确处理,"info":（String）错误描述字符串
 	@SerializedName("cmd_code")
 	private ParamsBeanEntity cmdCode;
 
@@ -33,13 +33,11 @@ public class HeaderEntity {
 	@SerializedName("msg_id")
 	private int msgId;
 
-	//请求时间戳or//响应时间戳
+
 	private String timestamp;
 
-	// 用于验证用户合法性的授权token，目前测试版本没有开启验证功能，只需要保证user_id非零即可
 	private String token;
 
-	//发起该请求的user_id
 	@SerializedName("user_id")
 	private int userId;
 
