@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import butterknife.OnClick;
  */
 public class MissionInfoFragment extends BaseFragment implements MissionInfoView{
 
+    private static final String TAG = MissionInfoFragment.class.getSimpleName();
     @Inject
     MissionInfoPresenter missionInfoPresenter;
     @BindView(R.id.root_view)FrameLayout rootView;
@@ -167,9 +169,10 @@ public class MissionInfoFragment extends BaseFragment implements MissionInfoView
         return getActivity().getApplicationContext();
     }
 
-    @OnClick(R.id.rl_retry)
-    void retry(){
-
+    @OnClick(R.id.btn_retry)
+    void retry(View v){
+        Log.i(TAG,"on retry()");
+        missionInfoPresenter.init();
     }
     /**
      * This interface must be implemented by activities that contain this
