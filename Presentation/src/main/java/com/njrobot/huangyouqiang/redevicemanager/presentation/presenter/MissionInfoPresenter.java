@@ -1,12 +1,16 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.view.presenter;
+package com.njrobot.huangyouqiang.redevicemanager.presentation.presenter;
 
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.domain.exception.DefaultErrorBundle;
+import com.njrobot.huangyouqiang.redevicemanager.domain.exception.ErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.DefaultSubscriber;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.exception.ErrorMessageFactory;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MissionInfoView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by huangyouqiang on 2016/8/3.
@@ -16,12 +20,13 @@ public class MissionInfoPresenter implements Presenter {
     private MissionInfoView missionInfoView;
 
     @Inject
-    public MissionInfoPresenter(UseCase getMissionInfoUseCase) {
+    public MissionInfoPresenter(@Named("mission") UseCase getMissionInfoUseCase) {
         this.getMissionInfoUseCase = getMissionInfoUseCase;
     }
     public void setView(MissionInfoView view){
         this.missionInfoView = view;
     }
+
     public void init(){
         this.missionInfoView.hideRetry();
         this.missionInfoView.showLoading();
@@ -42,6 +47,10 @@ public class MissionInfoPresenter implements Presenter {
         this.getMissionInfoUseCase.unSubscrib();
         missionInfoView = null;
     }
+    public void showErrorMessage(ErrorBundle errorBundle){
+        String errorMessage = ErrorMessageFactory.create(errorBundle.getException());
+        this.missionInfoView.showError(errorMessage);
+    }
     private class GetMissionInfo extends DefaultSubscriber<MissionEntity>{
         @Override
         public void onCompleted() {
@@ -51,7 +60,7 @@ public class MissionInfoPresenter implements Presenter {
         @Override
         public void onError(Throwable e) {
             missionInfoView.hideLoading();
-            missionInfoView.showError(e.getMessage());
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
             missionInfoView.showRetry();
         }
 

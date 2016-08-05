@@ -2,11 +2,11 @@ package com.njrobot.huangyouqiang.redevicemanager.presentation.view.activity;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.view.Window;
 
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.HasComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerMissionInfoComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.MissionInfoComponent;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module.MissionModule;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.Fragment.MissionInfoFragment;
 
@@ -39,6 +39,7 @@ public class MissionInfoActivity extends BaseActivity implements HasComponent<Mi
         this.missionInfoComponent = DaggerMissionInfoComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .missionModule(new MissionModule())
                 .build();
     }
 }

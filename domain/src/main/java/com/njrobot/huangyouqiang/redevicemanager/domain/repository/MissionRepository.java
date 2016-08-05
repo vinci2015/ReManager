@@ -2,6 +2,9 @@ package com.njrobot.huangyouqiang.redevicemanager.domain.repository;
 
 
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -10,5 +13,11 @@ import rx.Observable;
  */
 public interface MissionRepository {
 
-    Observable<MissionEntity> mission();
+    Observable<MissionEntity> mission(int missionId);
+
+    Observable<List<MissionEntity>> missions();
+
+    Observable<MissionEntity> cancelMission(int missionId);
+
+    Observable<RobotEntity> robot(int robotId);
 }

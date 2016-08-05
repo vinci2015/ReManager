@@ -17,7 +17,7 @@ import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.Missi
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MissionInfoView;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.view.presenter.MissionInfoPresenter;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MissionInfoPresenter;
 
 import javax.inject.Inject;
 
@@ -104,12 +104,18 @@ public class MissionInfoFragment extends BaseFragment implements MissionInfoView
         missionInfoPresenter.init();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        missionInfoPresenter.resume();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        missionInfoPresenter.pause();
+    }
+
 
     @Override
     public void onAttach(Context context) {

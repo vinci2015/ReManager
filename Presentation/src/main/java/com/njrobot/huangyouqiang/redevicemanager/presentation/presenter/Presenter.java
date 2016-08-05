@@ -1,4 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.view.presenter;
+package com.njrobot.huangyouqiang.redevicemanager.presentation.presenter;
 
 /**
  * Interface representing a Presenter in a model view presenter (MVP) pattern.

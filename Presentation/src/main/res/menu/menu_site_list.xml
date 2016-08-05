@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/p1s"
+        android:title="P1SHANG_FAT_F1"
+        android:orderInCategory="100" />
+    <item android:id="@+id/p2s"
+        android:title="P2SHANG_FAT_F1" />
+    <item android:id="@+id/p3s"
+        android:title="P3SHANG_FAT_F1"/>
+    <item android:id="@+id/p4s"
+        android:title="P4SHANG_FAT_F1" />
+    <item android:id="@+id/p2x"
+        android:title="P2XIA_FAT_F1"/>
+    <item android:id="@+id/x"
+        android:title="XIA_FAT_F1"/>
+    <item android:id="@+id/e21"
+        android:title="E21_FAT_F1"/>
+    <item android:id="@+id/e11"
+        android:title="E11_FAT_F1"/>
+    <item android:id="@+id/ewa"
+        android:title="EWAI2_FAT_F1"/>
+</menu>

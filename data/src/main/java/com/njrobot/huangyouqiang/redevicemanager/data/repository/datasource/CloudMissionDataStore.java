@@ -1,8 +1,13 @@
 package com.njrobot.huangyouqiang.redevicemanager.data.repository.datasource;
 
+import com.njrobot.huangyouqiang.redevicemanager.data.net.ReqCancelMission;
+import com.njrobot.huangyouqiang.redevicemanager.data.net.ReqRobot;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 import com.njrobot.huangyouqiang.redevicemanager.data.net.ReqMissionList;
 import com.njrobot.huangyouqiang.redevicemanager.data.net.RobotClient;
+import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -17,7 +22,22 @@ public class CloudMissionDataStore implements MissionDataStore {
     }
 
     @Override
-    public Observable<MissionEntity> getMissionEntity(ReqMissionList reqMissionList) {
+    public Observable<MissionEntity> getMissionEntity(ReqMissionList reqMissionList,int missionId) {
+        return this.robotClient.getMission(reqMissionList,missionId);
+    }
+
+    @Override
+    public Observable<List<MissionEntity>> getMissionEntityList(ReqMissionList reqMissionList) {
         return this.robotClient.getMissionList(reqMissionList);
+    }
+
+    @Override
+    public Observable<MissionEntity> cancelMission(ReqCancelMission reqCancelMission) {
+        return this.robotClient.cancelMission(reqCancelMission);
+    }
+
+    @Override
+    public Observable<RobotEntity> getRobotEntity(ReqRobot reqRobot) {
+        return this.robotClient.getRobot(reqRobot);
     }
 }

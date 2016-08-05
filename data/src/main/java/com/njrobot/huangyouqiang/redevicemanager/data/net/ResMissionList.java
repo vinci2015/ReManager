@@ -9,13 +9,8 @@ import java.util.List;
 /**
  * Created by huangyouqiang on 2016/6/29.
  */
-public class ResMissionList {
-    private HeaderEntity header;
+public class ResMissionList extends ResponseBody{
     private List<MissionEntity> mission_list;
-
-    public HeaderEntity getHeader() {
-        return header;
-    }
 
     public List<MissionEntity> getMission_list() {
         return mission_list;

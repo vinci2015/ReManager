@@ -25,21 +25,21 @@ public class HeaderEntity {
 
 	// 请求处理的错误码,code = 0 表示正确处理,"info":（String）错误描述字符串
 	@SerializedName("cmd_code")
-	private ParamsBeanEntity cmdCode;
+	protected ParamsBeanEntity cmdCode;
 
 	@SerializedName("device_id")
-	private String deviceId;
+	protected String deviceId;
 
 	@SerializedName("msg_id")
-	private int msgId;
+	protected int msgId;
 
 
-	private String timestamp;
+	protected String timestamp;
 
-	private String token;
+	protected String token;
 
 	@SerializedName("user_id")
-	private int userId;
+	protected int userId;
 
 	public void setCmdCode(ParamsBeanEntity cmdCode) {
 		this.cmdCode = cmdCode;

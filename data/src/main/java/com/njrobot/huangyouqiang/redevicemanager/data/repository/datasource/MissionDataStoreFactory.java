@@ -15,7 +15,7 @@ public class MissionDataStoreFactory {
     @Inject
     public MissionDataStoreFactory(Context context){
         if(context == null){
-            throw new IllegalArgumentException("argunment is illegal!");
+            throw new IllegalArgumentException("argument is illegal!");
         }
         this.context  = context.getApplicationContext();
     }

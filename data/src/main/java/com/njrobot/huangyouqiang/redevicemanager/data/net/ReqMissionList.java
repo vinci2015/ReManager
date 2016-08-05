@@ -6,11 +6,8 @@ import com.njrobot.huangyouqiang.redevicemanager.domain.entity.HeaderEntity;
 /**
  * Created by huangyouqiang on 2016/6/29.
  */
-public class ReqMissionList {
-    private HeaderEntity header;
-
+public class ReqMissionList extends RequestBody{
     public ReqMissionList() {
-        this.header = new HeaderEntity();
-        this.header.setUserId(2);
+        super();
     }
 }
