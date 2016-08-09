@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 
+import com.google.gson.Gson;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.NetworkConnectionException;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.ResponseNotCorrectException;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
@@ -63,6 +64,7 @@ public class RobotClient{
 					public Observable<List<MissionEntity>> call(ResMissionList resMissionList) {
 						ParamsBeanEntity errorBundle = resMissionList.getHeader().getError_code();
 						if(errorBundle.getCode()!= 0){
+							Log.i(TAG,"error");
 							return Observable.error(new ResponseNotCorrectException(errorBundle.getInfo()));
 						}
 						List<MissionEntity> missionListRecently = resMissionList.getMission_list();
@@ -121,6 +123,9 @@ public class RobotClient{
 		return Observable.error(new NetworkConnectionException());
 	}
 	public Observable<RobotEntity> getRobot(final ReqRobot reqRobot){
+		Gson gson = new Gson();
+		String s = gson.toJson(reqRobot);
+		Log.i(TAG,s);
 		return robotApi.getRobot(reqRobot)
 				.map(new Func1<ResRobot, ResRobot>() {
 					@Override

@@ -11,6 +11,7 @@ public class ParamsBeanEntity {
 	private String info;
 
 	public ParamsBeanEntity(){
+		this.code = 0;
 	//empty
 	}
 

@@ -10,7 +10,7 @@ import rx.observers.Subscribers;
 import rx.schedulers.Schedulers;
 
 /**
- * äº¤äº’å™¨åŸºç¡€ç±»
+ * ½»»¥Æ÷»ù´¡Àà
  * Created by huangyouqiang on 2016/7/28.
  */
 public abstract class UseCase {
@@ -25,21 +25,21 @@ public abstract class UseCase {
     }
 
     /**
-     * ç”Ÿäº§äº‹ä»¶Observable
-     * å­ç±»å®ç°å…·ä½“äº‹ä»¶
+     * Éú²úÊÂ¼şObservable
+     * ×ÓÀàÊµÏÖ¾ßÌåÊÂ¼ş
      * @return
      */
     protected abstract Observable buildUseCaseObservable();
 
     public void execute(Subscriber userCaseObservable){
         this.subscription = this.buildUseCaseObservable()
-                .subscribeOn(Schedulers.from(threadExecutor))//äº‹ä»¶çš„ç”Ÿäº§çº¿ç¨‹
-                .observeOn(postExecutorThread.getScheduler())//äº‹ä»¶çš„æ¶ˆè´¹çº¿ç¨‹
+                .subscribeOn(Schedulers.from(threadExecutor))//ÊÂ¼şµÄÉú²úÏß³Ì
+                .observeOn(postExecutorThread.getScheduler())//ÊÂ¼şµÄÏû·ÑÏß³Ì
                 .subscribe(userCaseObservable);
     }
 
     /**
-     * å–æ¶ˆè®¢é˜…
+     * È¡Ïû¶©ÔÄ
      */
     public void unSubscrib(){
         if(subscription.isUnsubscribed()){

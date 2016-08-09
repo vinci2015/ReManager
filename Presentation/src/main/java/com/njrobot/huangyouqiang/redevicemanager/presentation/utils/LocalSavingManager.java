@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import com.njrobot.huangyouqiang.redevicemanager.presentation.Constant;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.model.WatchModel;
 
 import java.io.ByteArrayInputStream;

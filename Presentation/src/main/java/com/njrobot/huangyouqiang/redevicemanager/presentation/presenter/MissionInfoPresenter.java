@@ -1,6 +1,10 @@
 package com.njrobot.huangyouqiang.redevicemanager.presentation.presenter;
 
+import android.util.Log;
+import android.widget.TabHost;
+
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.DefaultErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.ErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.DefaultSubscriber;
@@ -54,11 +58,14 @@ public class MissionInfoPresenter implements Presenter {
     private class GetMissionInfo extends DefaultSubscriber<MissionEntity>{
         @Override
         public void onCompleted() {
+            Log.i("Presenter","onComplete()");
             missionInfoView.hideLoading();
         }
 
         @Override
         public void onError(Throwable e) {
+            Log.i("Presenter","onError()");
+            e.printStackTrace();
             missionInfoView.hideLoading();
             showErrorMessage(new DefaultErrorBundle((Exception) e));
             missionInfoView.showRetry();
@@ -66,6 +73,7 @@ public class MissionInfoPresenter implements Presenter {
 
         @Override
         public void onNext(MissionEntity entity) {
+            Log.i("Presenter","onNext()");
             Mission mission = Mission.transform(entity);
             missionInfoView.renderMission(mission);
         }

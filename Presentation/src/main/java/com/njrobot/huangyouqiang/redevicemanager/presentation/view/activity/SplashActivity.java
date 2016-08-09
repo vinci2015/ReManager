@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.njrobot.huangyouqiang.redevicemanager.presentation.Constant;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.utils.Constant;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
 
 import butterknife.BindView;

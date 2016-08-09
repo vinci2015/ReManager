@@ -1,8 +1,13 @@
 package com.njrobot.huangyouqiang.redevicemanager.presentation.view.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MainPresenter;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.service.CommunicationService;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MainView;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.adapter.WatchInfoAdapter;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.component.BlurDialog;
@@ -31,6 +38,10 @@ public class MainActivity extends BaseActivity implements MainView{
 
     private MainPresenter mainPresenter;
 
+    //about service
+    private CommunicationService service;
+    private Intent serviceIntent;
+
     @OnClick(R.id.iv_more)
     void moreMenu(){
         PopupMenu popupMenu = new PopupMenu(this,moreMenu);
@@ -38,6 +49,9 @@ public class MainActivity extends BaseActivity implements MainView{
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.menu_find_robot){
+                    startActivity(new Intent(MainActivity.this,MissionInfoActivity.class));
+                }
                 return false;
             }
         });
@@ -47,13 +61,48 @@ public class MainActivity extends BaseActivity implements MainView{
     void editServerIP(){
        mainPresenter.editServer();
     }
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.i(TAG,"onServiceConnected");
+            service = ((CommunicationService.ServiceBinder)iBinder).getService();
+            service.setServiceCallback(new CommunicationService.OnServiceMessageCallback() {
+                @Override
+                public void onStartMission(int robotId) {
+
+                }
+
+                @Override
+                public void onFindWatch(WatchModel watchModel) {
+
+                }
+
+                @Override
+                public void sendMessage(String s) {
+
+                }
+            });
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            Log.e(TAG,"onServiceDisconnected()");
+            service = null;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mainPresenter = new MainPresenter(this);
-
+        serviceIntent = new Intent(MainActivity.this,CommunicationService.class);
+        //已startservice方式启动service，只有调用stopservice方法才结束service
+        //与service的通讯方式采用回调和直接持有service对象的方式
+        startService(serviceIntent);
+        bindService(serviceIntent,serviceConnection,Context.BIND_AUTO_CREATE);
     }
 
     @Override

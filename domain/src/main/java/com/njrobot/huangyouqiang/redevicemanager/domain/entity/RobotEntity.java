@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Created by huangyouqiang on 2016/6/29.
- * æè¿°ä¸€ä¸ªæœºå™¨äººå¯¹è±¡çš„æ‰€æœ‰
+ * ÃèÊöÒ»¸ö»úÆ÷ÈË¶ÔÏóµÄËùÓĞ
  */
 public class RobotEntity {
 
@@ -15,42 +15,42 @@ public class RobotEntity {
     @SerializedName("critical_power_percent")
     private int criticalPowerPercent;
 
-    // åœ¨åœ°å›¾ä¸Šæœå‘
+    // ÔÚµØÍ¼ÉÏ³¯Ïò
     private float heading;
 
-    //æœºå™¨äººid
+    //»úÆ÷ÈËid
     private int id;
 
     @SerializedName("load_status")
     private ParamsBeanEntity loadStatus;
 
-    //æœºå™¨äººmacåœ°å€ä¿¡æ¯
+    //»úÆ÷ÈËmacµØÖ·ĞÅÏ¢
     @SerializedName("mac_address")
     private String macAddress;
 
     /**
-     * â€œcodeâ€: (integer) // æœºå™¨äººæ‰€å¤„åœ°å›¾id
-     â€œinfoâ€: (striing) // æœºå™¨äººæ‰€å¤„åœ°å›¾åç§°
+     * ¡°code¡±: (integer) // »úÆ÷ÈËËù´¦µØÍ¼id
+     ¡°info¡±: (striing) // »úÆ÷ÈËËù´¦µØÍ¼Ãû³Æ
      */
     private ParamsBeanEntity map;
 
-    // æœºå™¨äººå½“å‰é€Ÿåº¦
+    // »úÆ÷ÈËµ±Ç°ËÙ¶È
     @SerializedName("nominal_vel")
     private float speed;
 
-    // æœºå™¨äººå½“å‰è§’é€Ÿåº¦
+    // »úÆ÷ÈËµ±Ç°½ÇËÙ¶È
     @SerializedName("nominal_w")
     private float angularVelocity;
 
-    // åœ¨åœ°å›¾ä¸Šçš„xåæ ‡
+    // ÔÚµØÍ¼ÉÏµÄx×ø±ê
     @SerializedName("pos_x")
     private float posX;
 
-    // åœ¨åœ°å›¾ä¸Šçš„yåæ ‡
+    // ÔÚµØÍ¼ÉÏµÄy×ø±ê
     @SerializedName("pos_y")
     private float posY;
 
-    // æœºå™¨äººå½“å‰ç”µé‡ç™¾åˆ†æ¯”
+    // »úÆ÷ÈËµ±Ç°µçÁ¿°Ù·Ö±È
     @SerializedName("power_percent")
     private int powerPercent;
 
@@ -64,14 +64,14 @@ public class RobotEntity {
     private ParamsBeanEntity scheduleStatus;
 
     /**
-     * â€œcodeâ€: (integer) // æœºå™¨äººçŠ¶æ€id
-     â€œinfoâ€: (striing) // æœºå™¨äººçŠ¶æ€æè¿°ç¬¦
+     * ¡°code¡±: (integer) // »úÆ÷ÈË×´Ì¬id
+     ¡°info¡±: (striing) // »úÆ÷ÈË×´Ì¬ÃèÊö·û
      */
     private ParamsBeanEntity status;
 
     /**
-     *  â€œcodeâ€: (integer) // æœºå™¨äººç±»å‹id
-     â€œinfoâ€: (striing) // æœºå™¨äººç±»å‹æè¿°ç¬¦
+     *  ¡°code¡±: (integer) // »úÆ÷ÈËÀàĞÍid
+     ¡°info¡±: (striing) // »úÆ÷ÈËÀàĞÍÃèÊö·û
      */
     private ParamsBeanEntity type;
 

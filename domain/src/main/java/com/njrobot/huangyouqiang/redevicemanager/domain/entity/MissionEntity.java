@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Created by huangyouqiang on 2016/6/23.
- * æè¿°ä¸€ä¸ªä»»åŠ¡å¯¹è±¡çš„æ‰€æœ‰ä¿¡æ¯
+ * ÃèÊöÒ»¸öÈÎÎñ¶ÔÏóµÄËùÓĞĞÅÏ¢
  */
 public class MissionEntity {
 
@@ -31,43 +31,43 @@ public class MissionEntity {
 
 	private ParamsBeanEntity status;
 
-	// ä»»åŠ¡æŒ‡æ´¾æ—¶é—´
+	// ÈÎÎñÖ¸ÅÉÊ±¼ä
 	@SerializedName("assigned_time")
 	private String assignedTime;
 
-	// ä»»åŠ¡ç»“æŸæ—¶é—´
+	// ÈÎÎñ½áÊøÊ±¼ä
 	@SerializedName("finished_time")
 	private String finishedTime;
 
-	// ä»»åŠ¡è¢«è°ƒåº¦æ—¶é—´
+	// ÈÎÎñ±»µ÷¶ÈÊ±¼ä
 	@SerializedName("scheduled_time")
 	private String scheduledTime;
 
-	// ä»»åŠ¡å¼€å§‹æ—¶é—´
+	// ÈÎÎñ¿ªÊ¼Ê±¼ä
 	@SerializedName("started_time")
 	private String startedTime;
 
 	@SerializedName("text_info")
 	private String textInfo;
 
-	//ä¸‹è¾¾ä»»åŠ¡çš„ç”¨æˆ·åç§°
+	//ÏÂ´ïÈÎÎñµÄÓÃ»§Ãû³Æ
 	@SerializedName("user_name")
 	private String username;
 
-	//ä¸‹è¾¾ä»»åŠ¡çš„ç”¨æˆ·id
+	//ÏÂ´ïÈÎÎñµÄÓÃ»§id
 	@SerializedName("user_id")
 	private int userId;
 
-	//ä»»åŠ¡idï¼Œè‹¥ä¸ºé›¶è¡¨ç¤ºå°šæœªè¢«ç³»ç»Ÿåˆ†é…
+	//ÈÎÎñid£¬ÈôÎªÁã±íÊ¾ÉĞÎ´±»ÏµÍ³·ÖÅä
 	private int id;
 
 	private int priority ;
 
-	//æ‰§è¡Œä»»åŠ¡çš„æœºå™¨äººidï¼Œè‹¥ä¸º0è¡¨ç¤ºå°šæœªæŒ‡æ´¾ç‰¹å®šæœºå™¨äººæ‰§è¡Œ
+	//Ö´ĞĞÈÎÎñµÄ»úÆ÷ÈËid£¬ÈôÎª0±íÊ¾ÉĞÎ´Ö¸ÅÉÌØ¶¨»úÆ÷ÈËÖ´ĞĞ
 	@SerializedName("robot_id")
 	private int robotId;
 
-	// ä»»åŠ¡åœé ç‚¹åºåˆ—ï¼Œæ¯ä¸€ä¸ªå…ƒç´ è¡¨ç¤ºä¸€ä¸ªåœé ç‚¹
+	// ÈÎÎñÍ£¿¿µãĞòÁĞ£¬Ã¿Ò»¸öÔªËØ±íÊ¾Ò»¸öÍ£¿¿µã
 	@SerializedName("mission_points")
 	private List<MissionPointEntity> missionPoints;
 

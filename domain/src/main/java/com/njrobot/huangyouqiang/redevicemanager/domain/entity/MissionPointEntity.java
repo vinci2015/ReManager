@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Created by huangyouqiang on 2016/6/23.
- * 	å…³äºå•ç‹¬åœé ç‚¹ç›¸å…³ä¿¡æ¯
+ * 	¹ØÓÚµ¥¶ÀÍ£¿¿µãÏà¹ØĞÅÏ¢
  */
 public class MissionPointEntity {
 	private float est_distance;
@@ -33,7 +33,7 @@ public class MissionPointEntity {
 		return mission_point;
 	}
 
-	// è¯¥åœé ç‚¹æ‰€å¯¹åº”çš„è·¯å¾„ç‚¹ä¿¡æ¯
+	// ¸ÃÍ£¿¿µãËù¶ÔÓ¦µÄÂ·¾¶µãĞÅÏ¢
 	public static class MissionPointInfo{
 		public MissionPointInfo(String siteName) {
 			//empty

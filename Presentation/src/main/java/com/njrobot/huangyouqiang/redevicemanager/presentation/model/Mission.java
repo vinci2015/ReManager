@@ -13,6 +13,10 @@ public class Mission {
     private int priority;
     private String destinationSite;
 
+    public Mission(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -48,8 +52,7 @@ public class Mission {
     public static Mission transform(MissionEntity entity){
         Mission mission = null;
         if(entity != null){
-            mission = new Mission();
-            mission.setId(entity.getId());
+            mission = new Mission(entity.getId());
             mission.setUserId(entity.getUserId());
             mission.setPriority(entity.getPriority());
             mission.setDestinationSite(entity.getMissionPoints().get(0).getMission_point().getPoint_info().getName());

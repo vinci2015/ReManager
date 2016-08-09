@@ -1,6 +1,8 @@
 package com.njrobot.huangyouqiang.redevicemanager.presentation.model;
 
 
+import com.mobvoi.android.wearable.Node;
+
 import java.io.Serializable;
 
 /**
@@ -36,12 +38,12 @@ public class WatchModel implements Serializable {
 		this.site = site;
 	}
 
-	/*public static WatchModel transformFromNode(Node node){
+	public static WatchModel transformFromNode(Node node){
 		WatchModel watchModel  = null;
 		if(node != null){
 			watchModel = new WatchModel(node.getId());
 			watchModel.setName(node.getDisplayName());
 		}
 		return watchModel;
-	}*/
+	}
 }
