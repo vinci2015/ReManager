@@ -19,7 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.utils.PictureUtils;
+import com.njrobot.huangyouqiang.redevicemanager.data.utils.PictureUtils;
 
 
 /**

@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.model.WatchModel;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.utils.LocalSavingManager;
+import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.data.utils.LocalSavingManager;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.activity.MainActivity;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.component.BlurDialog;
 

@@ -20,4 +20,5 @@ public interface MissionRepository {
     Observable<MissionEntity> cancelMission(int missionId);
 
     Observable<RobotEntity> robot(int robotId);
+
 }

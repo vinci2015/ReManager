@@ -1,10 +1,11 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.utils;
+package com.njrobot.huangyouqiang.redevicemanager.data.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import com.njrobot.huangyouqiang.redevicemanager.presentation.model.WatchModel;
+
+import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

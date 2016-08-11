@@ -1,4 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.model;
+package com.njrobot.huangyouqiang.redevicemanager.data.model;
 
 
 import com.mobvoi.android.wearable.Node;

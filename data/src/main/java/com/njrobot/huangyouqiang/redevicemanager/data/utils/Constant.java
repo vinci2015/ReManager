@@ -1,4 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.utils;
+package com.njrobot.huangyouqiang.redevicemanager.data.utils;
 
 /**
  * Created by huangyouqiang on 2016/5/10.

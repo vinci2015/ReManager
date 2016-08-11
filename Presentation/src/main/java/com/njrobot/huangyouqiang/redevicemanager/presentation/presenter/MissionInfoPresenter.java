@@ -1,16 +1,15 @@
 package com.njrobot.huangyouqiang.redevicemanager.presentation.presenter;
 
+import android.os.Looper;
 import android.util.Log;
-import android.widget.TabHost;
 
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.DefaultErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.ErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.DefaultSubscriber;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.exception.ErrorMessageFactory;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.model.Mission;
+import com.njrobot.huangyouqiang.redevicemanager.data.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MissionInfoView;
 
 import javax.inject.Inject;
@@ -32,6 +31,8 @@ public class MissionInfoPresenter implements Presenter {
     }
 
     public void init(){
+        Looper looper = Looper.myLooper();
+        Log.i("MissionPResenter",(looper == Looper.getMainLooper())+"");
         this.missionInfoView.hideRetry();
         this.missionInfoView.showLoading();
         getMissionInfoUseCase.execute(new GetMissionInfo());
@@ -73,7 +74,7 @@ public class MissionInfoPresenter implements Presenter {
 
         @Override
         public void onNext(MissionEntity entity) {
-            Log.i("Presenter","onNext()");
+            Log.i("Presenter","onNext()"+(entity == null));
             Mission mission = Mission.transform(entity);
             missionInfoView.renderMission(mission);
         }

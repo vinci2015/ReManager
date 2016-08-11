@@ -1,8 +1,6 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.model;
+package com.njrobot.huangyouqiang.redevicemanager.data.model;
 
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
-
-import java.net.MulticastSocket;
 
 /**
  * Created by huangyouqiang on 2016/7/29.

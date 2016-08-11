@@ -105,11 +105,13 @@ public class TaskService extends WearableListenerService implements MobvoiApiCli
                     DataItem dataItem = Wearable.DataApi.getDataItem(mobvoiApiClient,
                             Uri.parse("wear://" + phone.getId() + Constant.SITE_CHANGED))
                             .await().getDataItem();
-                    DataMapItem dataMapItem = DataMapItem.fromDataItem(dataItem);
-                    site = dataMapItem.getDataMap().getString(Constant.WATCH_SITE);
-                    Log.i(TAG, "phone ;" + phone.getDisplayName() + " site:" + site);
-                    if(messageLister != null) {
-                        messageLister.onGetSite(site);
+                    if(dataItem != null) {
+                        DataMapItem dataMapItem = DataMapItem.fromDataItem(dataItem);
+                        site = dataMapItem.getDataMap().getString(Constant.WATCH_SITE);
+                        Log.i(TAG, "phone ;" + phone.getDisplayName() + " site:" + site);
+                        if (messageLister != null) {
+                            messageLister.onGetSite(site);
+                        }
                     }
                 }else{
                     messageLister.onMessageShow("与手机的连接已断开");

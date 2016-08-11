@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.MissionInfoComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.model.Mission;
+import com.njrobot.huangyouqiang.redevicemanager.data.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MissionInfoView;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MissionInfoPresenter;
 

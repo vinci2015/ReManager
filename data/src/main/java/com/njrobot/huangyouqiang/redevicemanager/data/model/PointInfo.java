@@ -1,4 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.model;
+package com.njrobot.huangyouqiang.redevicemanager.data.model;
 
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.PointInfoEntity;
 

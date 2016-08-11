@@ -39,7 +39,7 @@ public class MissionInfoActivity extends BaseActivity implements HasComponent<Mi
         this.missionInfoComponent = DaggerMissionInfoComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
-                .missionModule(new MissionModule(580,2))
+                .missionModule(new MissionModule(583,2))
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.presentation.utils;
+package com.njrobot.huangyouqiang.redevicemanager.data.utils;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

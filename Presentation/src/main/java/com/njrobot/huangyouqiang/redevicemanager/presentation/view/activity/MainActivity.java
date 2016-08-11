@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MainPresenter;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.service.CommunicationService;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MainView;
@@ -61,33 +61,36 @@ public class MainActivity extends BaseActivity implements MainView{
     void editServerIP(){
        mainPresenter.editServer();
     }
+    private CommunicationService.OnServiceMessageCallback callback = new CommunicationService.OnServiceMessageCallback() {
+        @Override
+        public void onStartMission(int robotId) {
 
+        }
+
+        @Override
+        public void onFindWatch(WatchModel watchModel) {
+            Log.i(TAG,"onFindWatch");
+            mainPresenter.findWatch(watchModel);
+        }
+
+        @Override
+        public void sendMessage(String s) {
+
+        }
+    };
     ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             Log.i(TAG,"onServiceConnected");
             service = ((CommunicationService.ServiceBinder)iBinder).getService();
-            service.setServiceCallback(new CommunicationService.OnServiceMessageCallback() {
-                @Override
-                public void onStartMission(int robotId) {
-
-                }
-
-                @Override
-                public void onFindWatch(WatchModel watchModel) {
-
-                }
-
-                @Override
-                public void sendMessage(String s) {
-
-                }
-            });
+            service.setServiceCallback(callback);
+            mainPresenter.setService(service);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             Log.e(TAG,"onServiceDisconnected()");
+            service.ResetCallback();
             service = null;
         }
     };
@@ -120,6 +123,7 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unbindService(serviceConnection);
         mainPresenter.destroy();
     }
 
