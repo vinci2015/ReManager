@@ -9,25 +9,23 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by huangyouqiang on 2016/8/11.
+ * Created by huangyouqiang on 2016/8/12.
  */
-public class ChangeSite extends UseCase  {
+public class ResetView extends UseCase{
     private WatchRepository watchRepository;
     private String nodeId;
-    private String site;
 
     @Inject
-    public ChangeSite(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, WatchRepository watchRepository) {
+    public ResetView(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, WatchRepository watchRepository) {
         super(threadExecutor, postExecutorThread);
         this.watchRepository = watchRepository;
     }
 
-    public void reSetParams(String nodeId,String str){
+    public void resetParams(String nodeId){
         this.nodeId = nodeId;
-        this.site = str;
     }
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.watchRepository.changeSite(nodeId,site);
+        return this.watchRepository.resetView(this.nodeId);
     }
 }

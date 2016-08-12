@@ -8,6 +8,8 @@ import rx.Observable;
  * Created by huangyouqiang on 2016/8/10.
  */
 public interface WatchDataStore {
-    Observable<Node> getNode(int index);
+    Observable<Node> getNode();
     Observable<Boolean> changeSite(String nodeId,String site);
+    Observable<Boolean> findRobot(String nodeId,String distance);
+    Observable<Boolean> resetView(String nodeId);
 }

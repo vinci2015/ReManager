@@ -42,7 +42,10 @@ public class MainPresenter implements Presenter ,WatchInfoAdapter.DeliverMessage
 
     @Override
     public void destroy() {
-
+        this.mainView = null;
+        this.localSavingManager = null;
+        this.adapter = null;
+        this.service = null;
     }
 
     public void setService(CommunicationService service){
@@ -51,7 +54,7 @@ public class MainPresenter implements Presenter ,WatchInfoAdapter.DeliverMessage
     @Override
     public void changeSite(WatchModel watchModel) {
         if(this.service != null){
-
+            this.service.changeSite(watchModel.getId(),watchModel.getSite());
         }
     }
     public void editServer(){
@@ -69,6 +72,11 @@ public class MainPresenter implements Presenter ,WatchInfoAdapter.DeliverMessage
             adapter.addItem(model);
         }else{
             adapter.addItem(localModel);
+        }
+    }
+    public void getNode(){
+        if(this.service != null){
+            this.service.getNode();
         }
     }
 }

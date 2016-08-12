@@ -17,4 +17,7 @@ public interface RobotApi {
 
     @POST("robot/request_info_lst")
     Observable<ResRobot> getRobot(@Body ReqRobot reqRobot);
+
+    @POST("mission/send_mission")
+    Observable<ResSendMission> sendMission(@Body ReqSendMission reqSendMission);
 }

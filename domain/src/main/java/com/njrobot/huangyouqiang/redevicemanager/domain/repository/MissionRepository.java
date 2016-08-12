@@ -21,4 +21,5 @@ public interface MissionRepository {
 
     Observable<RobotEntity> robot(int robotId);
 
+    Observable<MissionEntity> sendMission(String desSite);
 }

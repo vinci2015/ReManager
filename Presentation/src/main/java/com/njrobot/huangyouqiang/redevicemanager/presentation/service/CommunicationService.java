@@ -14,33 +14,64 @@ import com.mobvoi.android.wearable.MessageEvent;
 import com.mobvoi.android.wearable.Node;
 import com.mobvoi.android.wearable.Wearable;
 import com.mobvoi.android.wearable.WearableListenerService;
+import com.njrobot.huangyouqiang.redevicemanager.data.utils.Constant;
+import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.domain.exception.DefaultErrorBundle;
+import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ChangeSite;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.DefaultSubscriber;
+import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.FindRobot;
+import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetNode;
+import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ResetView;
+import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.SendMission;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.AndroidApplication;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.ApplicationComponent;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerMissionInfoComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerWatchComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module.WatchModule;
 import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.exception.ErrorMessageFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rx.Subscriber;
+
 public class CommunicationService extends WearableListenerService implements MobvoiApiClient.ConnectionCallbacks,MobvoiApiClient.OnConnectionFailedListener{
     private static final String TAG = CommunicationService.class.getSimpleName();
-    @Inject
-    MobvoiApiClient client;
+    @Inject MobvoiApiClient client;
+
+    //usecase
+    @Inject GetNode getNode;
+    @Inject ChangeSite changeSite;
+    @Inject FindRobot findRobot;
+    @Inject ResetView resetView;
+    @Inject SendMission sendMission;
+
+    //status
+    private boolean isInMission = false;
+
+
     private OnServiceMessageCallback callback;
-    @Inject @Named("node")
-    UseCase getNode;
-    @Inject @Named("changeSite")
-    UseCase changeSite;
     private Node remoteNode;
+
     public CommunicationService() {
     }
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         Log.i(TAG,"onMessageReceived()");
+        if(messageEvent.getPath().equals(Constant.MESSAGE_ROBOT_REQUIREMENT)){
+            // // TODO: 2016/8/12 手表端请求一个任务
+            if(!isInMission) {
+                String site = new String(messageEvent.getData());
+                sendMission(site);
+            }else {
+                Log.e(TAG,"is in mission, can not sent a  brand new mission");
+            }
+        }else if(messageEvent.getPath().equals(Constant.MESSAGE_CANCEL_MISSION)){
+            //// TODO: 2016/8/12  手表端请求结束当前任务
+        }
     }
 
     @Override
@@ -49,9 +80,15 @@ public class CommunicationService extends WearableListenerService implements Mob
     }
 
     @Override
-    public void onPeerConnected(Node node) {
+    public void onPeerConnected(final Node node) {
         Log.i(TAG,"onPeerConnected()");
-       // callback.onFindWatch(WatchModel.transformFromNode(node));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                callback.onFindWatch(WatchModel.transformFromNode(node));
+            }
+        }).start();
+
     }
 
     @Override
@@ -68,9 +105,12 @@ public class CommunicationService extends WearableListenerService implements Mob
         Wearable.DataApi.addListener(client,this);
         Wearable.NodeApi.addListener(client,this);
         this.callback.sendMessage("connected watch");
-        getNode.execute(new GetNode());
+        getNode();
     }
 
+    public void getNode(){
+        getNode.execute(new SubGetNode());
+    }
     @Override
     public void onConnectionSuspended(int i) {
         Log.i(TAG,"onConnectionSuspended()");
@@ -98,6 +138,7 @@ public class CommunicationService extends WearableListenerService implements Mob
 
     @Override
     public boolean onUnbind(Intent intent) {
+        Log.i(TAG,"onUnbind()");
         callback = null;
         return super.onUnbind(intent);
     }
@@ -116,12 +157,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     public void onCreate() {
         super.onCreate();
         Log.i(TAG,"onCreate()");
-        initInjection("","");
-        /*this.client = new MobvoiApiClient.Builder(this)
-                .addApi(Wearable.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();*/
+        initInjection();
         this.client.registerConnectionCallbacks(this);
         this.client.registerConnectionFailedListener(this);
         this.client.connect();
@@ -138,12 +174,36 @@ public class CommunicationService extends WearableListenerService implements Mob
         callback = null;
     }
 
-    private void initInjection(String nodeId,String site){
+    private void initInjection(){
         ApplicationComponent applicationComponent = ((AndroidApplication)getApplication()).getApplicationComponent();
-        DaggerWatchComponent.builder().applicationComponent(applicationComponent).watchModule(new WatchModule(nodeId,site,0)).build().inject(this);
+        DaggerWatchComponent.builder().applicationComponent(applicationComponent).watchModule(new WatchModule()).build().inject(this);
     }
-    public void changeSite(String site){
-        initInjection(remoteNode.getId(),site);
+    public void sendMission(String site){
+        sendMission.resetParams(site);
+        sendMission.execute(new Subscriber<MissionEntity>() {
+            @Override
+            public void onCompleted() {
+                Log.i(TAG,"onCompleted()");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                String errorMsg = ErrorMessageFactory.create(new DefaultErrorBundle((Exception) e).getException());
+                Log.i(TAG,"onError()"+errorMsg+e.getMessage());
+                e.printStackTrace();
+                // TODO: 2016/8/12 错误处理 
+            }
+
+            @Override
+            public void onNext(MissionEntity missionEntity) {
+                Log.i(TAG,"onNext()");
+                // TODO: 2016/8/12 start a polling to check if the mission is running
+            }
+        });
+    }
+    public void changeSite(String nodeId,String site){
+        //initInjection(nodeId,site);
+        changeSite.reSetParams(nodeId,site);
         changeSite.execute(new DefaultSubscriber<Boolean>(){
             @Override
             public void onCompleted() {
@@ -153,6 +213,48 @@ public class CommunicationService extends WearableListenerService implements Mob
             @Override
             public void onError(Throwable e) {
                 Log.i(TAG,"onError()");
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                Log.i(TAG,"onNext()");
+                Log.i(TAG,"result "+aBoolean);
+            }
+        });
+    }
+    public void findRobot(String nodeId,String distance){
+        findRobot.resetParams(nodeId,distance);
+        findRobot.execute(new DefaultSubscriber<Boolean>(){
+            @Override
+            public void onCompleted() {
+                Log.i(TAG,"onCompleted()");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                String errorMsg = ErrorMessageFactory.create(new DefaultErrorBundle((Exception) e).getException());
+                Log.i(TAG,"onError()"+errorMsg);
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                Log.i(TAG,"onNext()");
+                Log.i(TAG,"result "+aBoolean);
+            }
+        });
+    }
+    public void resetView(String nodeId){
+        resetView.resetParams(nodeId);
+        resetView.execute(new DefaultSubscriber<Boolean>(){
+            @Override
+            public void onCompleted() {
+                Log.i(TAG,"onCompleted()");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                String errorMsg = ErrorMessageFactory.create(new DefaultErrorBundle((Exception) e).getException());
+                Log.i(TAG,"onError()"+errorMsg);
             }
 
             @Override
@@ -173,7 +275,7 @@ public class CommunicationService extends WearableListenerService implements Mob
         this.callback = null;
     }
 
-    private class GetNode extends DefaultSubscriber<Node>{
+    private class SubGetNode extends DefaultSubscriber<Node>{
         @Override
         public void onCompleted() {
             Log.i(TAG,"onCompleted()");
@@ -181,7 +283,8 @@ public class CommunicationService extends WearableListenerService implements Mob
 
         @Override
         public void onError(Throwable e) {
-            Log.i(TAG,"onError()");
+            String errorMsg = ErrorMessageFactory.create(new DefaultErrorBundle((Exception) e).getException());
+            Log.i(TAG,"onError()"+errorMsg);
             e.printStackTrace();
         }
 

@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.mobvoi.android.common.ConnectionResult;
 import com.mobvoi.android.common.api.MobvoiApiClient;
@@ -132,6 +135,13 @@ public class TaskService extends WearableListenerService implements MobvoiApiCli
     @Override
     public void onDataChanged(DataEventBuffer dataEventBuffer) {
         Log.i(TAG,"on data changed");
+        final Handler mhandler = new Handler(Looper.getMainLooper());
+        mhandler.post(new Runnable() {
+            @Override
+            public void run() {
+                messageLister.onMessageShow("onDataChanged,");
+            }
+        });
         List<DataEvent> events = FreezableUtils.freezeIterable(dataEventBuffer);
         dataEventBuffer.close();
         for(DataEvent event : events){
@@ -144,6 +154,7 @@ public class TaskService extends WearableListenerService implements MobvoiApiCli
                     String watchId = dataMapItem.getDataMap().getString(Constant.WATCH_ID);
                     String selfId = Wearable.NodeApi.getLocalNode(mobvoiApiClient).await().getNode().getId();
                     if(!watchId.equals(selfId)){
+                        Log.e(TAG,"watch id is not equal");
                         return;
                     }
                     site = dataMapItem.getDataMap().getString(Constant.WATCH_SITE);

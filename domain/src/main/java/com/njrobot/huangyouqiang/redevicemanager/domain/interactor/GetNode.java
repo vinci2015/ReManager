@@ -13,17 +13,15 @@ import rx.Observable;
  */
 public class GetNode extends UseCase {
     private WatchRepository watchDataRepository;
-    private final int index;
 
     @Inject
-    public GetNode(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, WatchRepository watchDataRepository, int index) {
+    public GetNode(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, WatchRepository watchDataRepository) {
         super(threadExecutor, postExecutorThread);
         this.watchDataRepository = watchDataRepository;
-        this.index = index;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.watchDataRepository.getNode(this.index);
+        return this.watchDataRepository.getNode();
     }
 }

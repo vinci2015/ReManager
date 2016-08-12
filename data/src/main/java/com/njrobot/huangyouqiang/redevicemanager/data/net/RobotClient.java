@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.NetworkConnectionException;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.ResponseNotCorrectException;
+import com.njrobot.huangyouqiang.redevicemanager.data.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.ParamsBeanEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
@@ -51,6 +52,27 @@ public class RobotClient{
 		return this;
 	}
 
+	/**
+	 * 发送一个任务请求
+	 * @param reqSendMission
+     * @return 任务信息
+     */
+	public Observable<MissionEntity> sendMission(ReqSendMission reqSendMission){
+		final Gson gson = new Gson();
+		Log.i(TAG,"request:   "+gson.toJson(reqSendMission));
+		return robotApi.sendMission(reqSendMission)
+				.flatMap(new Func1<ResSendMission, Observable<MissionEntity>>() {
+					@Override
+					public Observable<MissionEntity> call(ResSendMission resSendMission) {
+						Log.i(TAG,"response:   "+gson.toJson(resSendMission));
+						ParamsBeanEntity errorBundle = resSendMission.getHeader().getError_code();
+						if(errorBundle.getCode()!= 0){
+							return Observable.error(new ResponseNotCorrectException(errorBundle.getInfo()));
+						}
+						return Observable.just(resSendMission.getMissionEntity());
+					}
+				});
+	}
     /**
 	 * 指定任务信息
 	 * @param reqMissionList

@@ -22,12 +22,22 @@ public class WatchDataRepository implements WatchRepository {
     }
 
     @Override
-    public Observable<Node> getNode(int index) {
-        return  this.watchDataStore.getNode(index);
+    public Observable<Node> getNode() {
+        return  this.watchDataStore.getNode();
     }
 
     @Override
-    public Observable changeSite(String nodeId,String site) {
-        return null;
+    public Observable<Boolean> changeSite(String nodeId,String site) {
+        return this.watchDataStore.changeSite(nodeId,site);
+    }
+
+    @Override
+    public Observable<Boolean> findRobot(String nodeId, String distance) {
+        return watchDataStore.findRobot(nodeId,distance);
+    }
+
+    @Override
+    public Observable resetView(String nodeId) {
+        return watchDataStore.resetView(nodeId);
     }
 }

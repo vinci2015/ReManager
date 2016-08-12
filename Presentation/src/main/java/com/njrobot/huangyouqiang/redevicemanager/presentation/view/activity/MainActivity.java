@@ -85,6 +85,7 @@ public class MainActivity extends BaseActivity implements MainView{
             service = ((CommunicationService.ServiceBinder)iBinder).getService();
             service.setServiceCallback(callback);
             mainPresenter.setService(service);
+            mainPresenter.getNode();
         }
 
         @Override
