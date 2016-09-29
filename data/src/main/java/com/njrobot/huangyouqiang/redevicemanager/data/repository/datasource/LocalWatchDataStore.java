@@ -1,7 +1,5 @@
 package com.njrobot.huangyouqiang.redevicemanager.data.repository.datasource;
 
-import android.util.Log;
-
 import com.mobvoi.android.common.api.MobvoiApiClient;
 import com.mobvoi.android.common.api.ResultCallback;
 import com.mobvoi.android.wearable.DataApi;
@@ -36,7 +34,7 @@ public class LocalWatchDataStore implements WatchDataStore {
             public void call(Subscriber<? super Node> subscriber) {
                 List<Node> nodes = Wearable.NodeApi.getConnectedNodes(client).await().getNodes();
                 if(nodes.isEmpty()){
-                    subscriber.onError(new NodeListNullException("get node list is empty"));
+                    subscriber.onError(new NodeListNullException());
                 }else{
                     subscriber.onNext(nodes.get(0));
                     subscriber.onCompleted();

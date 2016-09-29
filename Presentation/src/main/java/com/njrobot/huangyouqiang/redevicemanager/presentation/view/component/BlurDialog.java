@@ -87,6 +87,7 @@ public class BlurDialog extends Dialog {
 					removeBackground();
 				}
 				onConfirmClickListener.onConfirm(v,edtContent.getText().toString());
+				dismiss();
 			}
 		});
 	}

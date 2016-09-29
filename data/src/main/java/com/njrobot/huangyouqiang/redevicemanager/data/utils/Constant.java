@@ -24,4 +24,7 @@ public class Constant {
 	public static final String MY_UUID_INSECURE = "77408000-4b58-4f22-a182-759343a7e0ea";
 	public static final String SOCK_NAME_SECURE = "SOCK_NAME_SECURE";
 	public static final String SOCK_NAME_INSECURE = "SOCK_NAME_INSECURE";
+	public static final String DEFAULT_SERVER_IP = "192.168.1.158";
+	public static final String CHANGE_SERVER_IP_TITTLE = "服务器IP";
+	public static final String CHANGE_WATCH_SITE_TITTLE = "站点";
 }

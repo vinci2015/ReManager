@@ -14,6 +14,7 @@ import com.mobvoi.android.wearable.MessageEvent;
 import com.mobvoi.android.wearable.Node;
 import com.mobvoi.android.wearable.Wearable;
 import com.mobvoi.android.wearable.WearableListenerService;
+import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.data.utils.Constant;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.DefaultErrorBundle;
@@ -23,17 +24,13 @@ import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.FindRobot;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetNode;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ResetView;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.SendMission;
-import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.AndroidApplication;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.ApplicationComponent;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerMissionInfoComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerWatchComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module.WatchModule;
-import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.exception.ErrorMessageFactory;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import rx.Subscriber;
 
@@ -284,8 +281,7 @@ public class CommunicationService extends WearableListenerService implements Mob
         @Override
         public void onError(Throwable e) {
             String errorMsg = ErrorMessageFactory.create(new DefaultErrorBundle((Exception) e).getException());
-            Log.i(TAG,"onError()"+errorMsg);
-            e.printStackTrace();
+            Log.i(TAG,"onError()  : "+errorMsg);
         }
 
         @Override
