@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.activity.MainActivity"></activity>
-        <activity android:name=".view.activity.MissionInfoActivity" />
         <activity
             android:name=".view.activity.SplashActivity"
             android:theme="@style/AppTheme.FullScreen">

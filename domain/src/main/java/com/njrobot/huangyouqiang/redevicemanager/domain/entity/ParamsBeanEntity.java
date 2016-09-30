@@ -1,5 +1,6 @@
 package com.njrobot.huangyouqiang.redevicemanager.domain.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,15 @@ public class ParamsBeanEntity {
 	private List<DataBean> data;
 	private String info;
 
-	public ParamsBeanEntity(){
+	public ParamsBeanEntity() {
 		this.code = 0;
+	}
+
+	public ParamsBeanEntity(String waitProp, String waitValue){
+		this.code = 0;
+		this.data = new ArrayList<>();
+		DataBean waitData = new DataBean(waitProp,waitValue);
+		this.data.add(waitData);
 	//empty
 	}
 
@@ -45,7 +53,9 @@ public class ParamsBeanEntity {
 		private String value;
 		private int value_id;
 
-		public DataBean(){
+		public DataBean(String waitProp,String waitValue){
+			this.prop = waitProp;
+			this.value = waitValue;
 			//empty
 		}
 

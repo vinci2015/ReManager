@@ -5,11 +5,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-
 import com.google.gson.Gson;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.NetworkConnectionException;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.ResponseNotCorrectException;
-import com.njrobot.huangyouqiang.redevicemanager.data.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.ParamsBeanEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
@@ -74,7 +72,7 @@ public class RobotClient{
 				});
 	}
     /**
-	 * 指定任务信息
+	 * 获取指定任务信息
 	 * @param reqMissionList
 	 * @param missionId
      */

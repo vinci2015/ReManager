@@ -13,15 +13,17 @@ import rx.Observable;
  */
 public class GetRobotDetails extends UseCase {
     private MissionRepository missionRepository;
-    private final int robotId;
+    private int robotId;
 
     @Inject
-    public GetRobotDetails(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, MissionRepository missionRepository, int robotId) {
+    public GetRobotDetails(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, MissionRepository missionRepository) {
         super(threadExecutor, postExecutorThread);
         this.missionRepository = missionRepository;
-        this.robotId = robotId;
     }
 
+    public void resetParam(int id){
+        this.robotId = id;
+    }
     @Override
     protected Observable buildUseCaseObservable() {
         return this.missionRepository.robot(this.robotId);

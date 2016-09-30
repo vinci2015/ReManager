@@ -1,5 +1,6 @@
 package com.njrobot.huangyouqiang.redevicemanager.domain.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,9 +13,9 @@ public class MissionPointEntity {
 	private int percent;
 	private MissionPointInfo mission_point;
 
-	public MissionPointEntity(String siteName) {
+	public MissionPointEntity(String siteName,String waitProp,String waitValue) {
 		//empty
-		this.mission_point = new MissionPointInfo(siteName);
+		this.mission_point = new MissionPointInfo(siteName,waitProp,waitValue);
 	}
 
 	public float getEst_distance() {
@@ -35,9 +36,12 @@ public class MissionPointEntity {
 
 	// 该停靠点所对应的路径点信息
 	public static class MissionPointInfo{
-		public MissionPointInfo(String siteName) {
+		public MissionPointInfo(String siteName,String waitProp,String waitValue) {
 			//empty
 			this.point_info = new PointInfoEntity(siteName);
+			this.wait_conditions = new ArrayList<>();
+			ParamsBeanEntity waitParam = new ParamsBeanEntity(waitProp,waitValue);
+			this.wait_conditions.add(waitParam);
 		}
 
 		private ParamsBeanEntity action;

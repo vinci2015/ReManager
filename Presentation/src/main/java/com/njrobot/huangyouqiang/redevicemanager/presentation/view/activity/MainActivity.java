@@ -8,12 +8,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.databinding.ActivityMainCopyBinding;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.databinding.ActivityMainBinding;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MainPresenter;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.service.CommunicationService;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MainView;
@@ -26,7 +28,7 @@ public class MainActivity extends BaseActivity implements MainView{
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MainPresenter mainPresenter;
-    private ActivityMainCopyBinding binding;
+    private ActivityMainBinding binding;
     //about service
     private CommunicationService service;
     private Intent serviceIntent;
@@ -44,7 +46,7 @@ public class MainActivity extends BaseActivity implements MainView{
 
         @Override
         public void sendMessage(String s) {
-
+            Toast.makeText(MainActivity.this,s,Toast.LENGTH_SHORT).show();
         }
     };
     ServiceConnection serviceConnection = new ServiceConnection() {
@@ -70,6 +72,7 @@ public class MainActivity extends BaseActivity implements MainView{
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         mainPresenter = new MainPresenter(this,this);
+        mainPresenter.init();
         binding.setPresenter(mainPresenter);
         serviceIntent = new Intent(MainActivity.this,CommunicationService.class);
         //已startservice方式启动service，只有调用stopservice方法才结束service
@@ -88,13 +91,17 @@ public class MainActivity extends BaseActivity implements MainView{
     protected void onPause() {
         super.onPause();
         mainPresenter.pause();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(serviceConnection);
         mainPresenter.destroy();
+        if(!service.getIsInMission()){
+            unbindService(serviceConnection);
+            stopService(serviceIntent);
+        }
     }
 
     @Override
@@ -104,8 +111,9 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @Override
     public void initView(WatchRecyclerAdapter adapter) {
-       binding.recyclerWatches.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerWatches.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerWatches.setAdapter(adapter);
+        binding.recyclerWatches.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
@@ -125,8 +133,5 @@ public class MainActivity extends BaseActivity implements MainView{
         return getApplicationContext();
     }
 
-    public boolean isInMission(){
-        return false;
-    }
 }
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.BR;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MainPresenter;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.adapter.handler.WatchRecyclerHandler;
 
 import java.util.List;
@@ -23,11 +24,13 @@ public class WatchRecyclerAdapter extends RecyclerView.Adapter<BindingViewHolder
     private LayoutInflater mLayoutInflater;
     private Context context;
     private List<WatchModel> watchList;
+    private MainPresenter mainPresenter;
 
-    public WatchRecyclerAdapter(Context context,List<WatchModel> watchList) {
+    public WatchRecyclerAdapter(Context context, List<WatchModel> watchList, MainPresenter presenter) {
         this.context = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.watchList = watchList;
+        this.mainPresenter = presenter;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class WatchRecyclerAdapter extends RecyclerView.Adapter<BindingViewHolder
         WatchRecyclerHandler handler = new WatchRecyclerHandler(watchList.get(position));
         holder.getBinding().setVariable(BR.item,handler);
         holder.getBinding().executePendingBindings();
+        holder.getBinding().setVariable(BR.presenter,mainPresenter);
     }
 
     @Override

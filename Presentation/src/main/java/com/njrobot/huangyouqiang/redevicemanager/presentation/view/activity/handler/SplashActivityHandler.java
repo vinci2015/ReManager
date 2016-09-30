@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
@@ -17,14 +18,15 @@ import com.njrobot.huangyouqiang.redevicemanager.presentation.view.activity.Spla
  * @author huangyouqiang
  * @date 2016/9/28
  */
-
 public class SplashActivityHandler extends BaseObservable {
     private String pwd;
     private Context mContext;
+    private Handler mHandler;
 
     public SplashActivityHandler(Context mContext) {
         this.mContext = mContext;
         pwd = new String("");
+        mHandler = new Handler();
     }
 
     @Bindable
@@ -35,17 +37,15 @@ public class SplashActivityHandler extends BaseObservable {
     public void setPwd(String pwd) {
         this.pwd = pwd;
         notifyPropertyChanged(BR.pwd);
+        if(pwd.length() == 4) {
+            mHandler.postDelayed(runnable, 200);
+        }
     }
     public void clearPwd(@Nullable View v){
         setPwd("");
     }
     public void clickNumber(String s){
-        if(getPwd().length()<4){
-            setPwd(getPwd()+s);
-            if(getPwd().length() ==4){
-                checkPwd();
-            }
-        }
+        setPwd(getPwd()+s);
     }
 
     private void checkPwd() {
@@ -57,4 +57,10 @@ public class SplashActivityHandler extends BaseObservable {
             clearPwd(null);
         }
     }
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            checkPwd();
+        }
+    };
 }

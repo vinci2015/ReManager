@@ -4,7 +4,6 @@ import android.app.Fragment;
 
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.HasComponent;
 
-import butterknife.ButterKnife;
 
 /**
  * Created by huangyouqiang on 2016/8/3.

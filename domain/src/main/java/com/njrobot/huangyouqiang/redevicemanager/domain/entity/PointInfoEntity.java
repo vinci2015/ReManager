@@ -8,6 +8,7 @@ public class PointInfoEntity {
 	public PointInfoEntity(String name) {
 		//empty
 		this.name = name;
+
 	}
 
 	private String alias;

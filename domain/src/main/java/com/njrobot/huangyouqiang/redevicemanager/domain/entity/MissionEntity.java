@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class MissionEntity {
 
-	public MissionEntity(String mFinalPoint) {
+	public MissionEntity(String mFinalPoint,String waitProp,String waitValue) {
 		//empty
 		this.userId = 2;
 		this.priority = 1;
 		this.missionPoints = new ArrayList<>();
-		this.missionPoints.add(new MissionPointEntity(mFinalPoint));
+		this.missionPoints.add(new MissionPointEntity(mFinalPoint,waitProp,waitValue));
 	}
 
 	private ParamsBeanEntity area;

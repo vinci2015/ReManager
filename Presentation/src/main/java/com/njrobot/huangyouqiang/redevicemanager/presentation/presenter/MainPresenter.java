@@ -2,10 +2,11 @@ package com.njrobot.huangyouqiang.redevicemanager.presentation.presenter;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -17,7 +18,7 @@ import com.njrobot.huangyouqiang.redevicemanager.presentation.BR;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.service.CommunicationService;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MainView;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.view.activity.MissionInfoActivity;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.view.activity.MainActivity;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.adapter.WatchRecyclerAdapter;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.adapter.handler.WatchRecyclerHandler;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.component.BlurDialog;
@@ -39,13 +40,11 @@ public class MainPresenter  extends BaseObservable implements Presenter{
         this.mainView = mainView;
         this.mContext = context;
         this.localSavingManager = LocalSavingManager.getInstance(mainView.context());
-       // this.adapter = new WatchInfoAdapter(new ArrayList<WatchModel>(),mContext,"站点",this);
-        this.adapter = new WatchRecyclerAdapter(context,new ArrayList<WatchModel>());
-        init();
+        this.adapter = new WatchRecyclerAdapter(context,new ArrayList<WatchModel>(),this);
     }
 
     public void init(){
-        String serverIP = this.localSavingManager.getServerIP();
+        serverIP = this.localSavingManager.getServerIP();
         this.mainView.initView(this.adapter);
     }
     @Override
@@ -112,35 +111,44 @@ public class MainPresenter  extends BaseObservable implements Presenter{
         return serverIP;
     }
     public void onClickChangeServerIP(){
+        if(service.getIsInMission()){
+            this.mainView.showMessage("当前有任务在执行，不能修改服务器信息");
+            return;
+        }
         this.mainView.Dialog(Constant.CHANGE_SERVER_IP_TITTLE, getServerIP(), new BlurDialog.OnConfirmClickListener() {
             @Override
             public void onConfirm(View v, String content) {
-                // TODO: 2016/9/29  if is in mission 
                 setServerIP(content);
             }
         });
     }
     public void onClickChangeSite(final WatchRecyclerHandler handler){
+        Log.i("MainPresenter","onClickChangeSite()");
+        if(service.getIsInMission()){
+            this.mainView.showMessage("当前有任务在执行，不能修改站点信息");
+            return;
+        }
         this.mainView.Dialog(Constant.CHANGE_WATCH_SITE_TITTLE, handler.getWatch().getSite(), new BlurDialog.OnConfirmClickListener() {
             @Override
             public void onConfirm(View v, String content) {
-                // TODO: 2016/9/29  if is in mission ? 
                 WatchModel watchModel = handler.getWatch();
                 watchModel.setSite(content);
                 handler.setWatch(watchModel);
+                localSavingManager.setWatch(watchModel);
+                service.changeSite(watchModel.getId(),watchModel.getSite());
             }
         });
     }
     public void moreMenu(View view){
-        PopupMenu popupMenu = new PopupMenu(this.mContext,view);
+        PopupMenu popupMenu = new PopupMenu(mContext,view, Gravity.END);
         popupMenu.getMenuInflater().inflate(R.menu.toolbar_menu,popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.menu_find_robot){
-                    mContext.startActivity(new Intent(mContext,MissionInfoActivity.class));
+                if(menuItem.getItemId() == R.id.menu_cancel){
+                    ((MainActivity)mContext).finish();
                 }
-                return false;
+                return true;
             }
         });
         popupMenu.show();

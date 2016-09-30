@@ -12,16 +12,18 @@ import rx.Observable;
  * Created by huangyouqiang on 2016/8/4.
  */
 public class CancelMission extends UseCase {
-    private final int missionId;
+    private int missionId;
     private MissionRepository missionRepository;
 
     @Inject
-    public CancelMission(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, int missionId, MissionRepository missionRepository) {
+    public CancelMission(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, MissionRepository missionRepository) {
         super(threadExecutor, postExecutorThread);
-        this.missionId = missionId;
         this.missionRepository = missionRepository;
     }
 
+    public void resetParams(int id){
+        this.missionId = missionId;
+    }
     @Override
     protected Observable buildUseCaseObservable() {
         return this.missionRepository.cancelMission(this.missionId);

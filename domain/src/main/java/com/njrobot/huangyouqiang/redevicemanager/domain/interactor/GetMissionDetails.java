@@ -13,17 +13,19 @@ import rx.Observable;
  * Created by huangyouqiang on 2016/7/28.
  */
 public class GetMissionDetails extends UseCase {
-    private final int missionId;
+    private int missionId;
     private MissionRepository missionRepository;
 
     @Inject
     public GetMissionDetails(MissionRepository missionRepository, ThreadExecutor threadExecutor,
-                             PostExecutorThread postExecutorThread, int missionId) {
+                             PostExecutorThread postExecutorThread) {
         super(threadExecutor, postExecutorThread);
         this.missionRepository = missionRepository;
-        this.missionId = missionId;
     }
 
+    public void resetParam(int id){
+        this.missionId = id;
+    }
     @Override
     protected Observable buildUseCaseObservable() {
         return this.missionRepository.mission(this.missionId);

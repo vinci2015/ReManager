@@ -10,7 +10,7 @@ public class ReqSendMission extends RequestBody {
 
     public ReqSendMission(String destinationSite) {
         super();
-        this.mission_obj = new MissionEntity(destinationSite);
+        this.mission_obj = new MissionEntity(destinationSite,"time","1.0");
     }
 
 }
