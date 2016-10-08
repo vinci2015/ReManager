@@ -1,7 +1,8 @@
 package com.njrobot.huangyouqiang.redevicemanager.data.utils;
 
 /**
- * Created by huangyouqiang on 2016/5/10.
+ * @author huangyouqiang
+ * @date 2016/5/10
  */
 public class Constant {
 	public static final String COMMAND_FIND_ROBOT = "/COMMAND_FIND_ROBOT";

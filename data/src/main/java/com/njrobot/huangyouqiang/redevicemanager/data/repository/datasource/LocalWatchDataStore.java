@@ -18,7 +18,8 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
- * Created by huangyouqiang on 2016/8/10.
+ * @author huangyouqiang
+ * @date 2016/8/10
  */
 public class LocalWatchDataStore implements WatchDataStore {
     private MobvoiApiClient client;

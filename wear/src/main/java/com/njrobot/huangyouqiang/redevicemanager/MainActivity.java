@@ -47,7 +47,7 @@ View.OnLongClickListener{
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
-			if(action == Intent.ACTION_TIME_TICK){
+			if(action.equals(Intent.ACTION_TIME_TICK)){
 				Log.i(TAG,"on receive action time_stick");
 				if(backGroundView != null){
 					backGroundView.reFreshTime();
@@ -152,7 +152,7 @@ View.OnLongClickListener{
 	@Override
 	public boolean onLongClick(View v) {
 		Log.i(TAG,"onLongClick");
-		if(callButton != null && callButton.isInCalling() == true){
+		if(callButton != null && callButton.isInCalling()){
 			isMissionCancel = true;
 			iv_net.setVisibility(View.INVISIBLE);
 			if(taskServer != null){

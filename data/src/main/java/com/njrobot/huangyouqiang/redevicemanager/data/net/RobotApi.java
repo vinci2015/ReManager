@@ -6,9 +6,10 @@ import retrofit2.http.POST;
 import rx.Observable;
 
 /**
- * Created by huangyouqiang on 2016/7/28.
+ * @author huangyouqiang
+ * @date 2016/7/28
  */
-public interface RobotApi {
+interface RobotApi {
     @POST("mission/mission_list")
     Observable<ResMissionList> getMissionList(@Body ReqMissionList reqMissionList);
 

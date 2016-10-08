@@ -12,7 +12,6 @@ import com.njrobot.huangyouqiang.redevicemanager.domain.executor.ThreadExecutor;
 import com.njrobot.huangyouqiang.redevicemanager.domain.repository.MissionRepository;
 import com.njrobot.huangyouqiang.redevicemanager.domain.repository.WatchRepository;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.AndroidApplication;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.PerService;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.UIThread;
 
 import javax.inject.Singleton;
@@ -21,7 +20,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by huangyouqiang on 2016/8/3.
+ * @author huangyouqiang
+ * @date 2016/8/3
  */
 @Module
 public class ApplicationModule {

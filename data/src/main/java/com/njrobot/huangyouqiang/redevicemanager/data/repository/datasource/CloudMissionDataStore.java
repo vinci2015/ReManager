@@ -13,12 +13,13 @@ import java.util.List;
 import rx.Observable;
 
 /**
- * Created by huangyouqiang on 2016/7/29.
+ * @author huangyouqiang
+ * @date 2016/7/29
  */
-public class CloudMissionDataStore implements MissionDataStore {
+class CloudMissionDataStore implements MissionDataStore {
     private RobotClient robotClient;
 
-    public CloudMissionDataStore(RobotClient robotClient){
+    CloudMissionDataStore(RobotClient robotClient){
         this.robotClient = robotClient;
     }
 

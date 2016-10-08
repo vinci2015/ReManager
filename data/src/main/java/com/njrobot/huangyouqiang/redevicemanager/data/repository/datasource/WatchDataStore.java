@@ -5,7 +5,8 @@ import com.mobvoi.android.wearable.Node;
 import rx.Observable;
 
 /**
- * Created by huangyouqiang on 2016/8/10.
+ * @author huangyouqiang
+ * @date 2016/8/10
  */
 public interface WatchDataStore {
     Observable<Node> getNode();

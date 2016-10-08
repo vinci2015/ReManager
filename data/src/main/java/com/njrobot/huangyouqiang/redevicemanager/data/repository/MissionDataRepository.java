@@ -17,15 +17,14 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by huangyouqiang on 2016/7/29.
+ * @author huangyouqiang
+ * @date 2016/7/29
  */
 public class MissionDataRepository implements MissionRepository {
-    private MissionDataStoreFactory missionDataStoreFactory;
     private MissionDataStore missionDataStore;
 
     @Inject
-    public MissionDataRepository(MissionDataStoreFactory missionDataStoreFactory) {
-        this.missionDataStoreFactory = missionDataStoreFactory;
+    MissionDataRepository(MissionDataStoreFactory missionDataStoreFactory) {
         missionDataStore = missionDataStoreFactory.createCloudDataStore();
     }
 

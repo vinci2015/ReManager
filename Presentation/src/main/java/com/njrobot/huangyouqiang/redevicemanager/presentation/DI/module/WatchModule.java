@@ -1,30 +1,24 @@
 package com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module;
 
+import com.njrobot.huangyouqiang.redevicemanager.domain.executor.PostExecutorThread;
+import com.njrobot.huangyouqiang.redevicemanager.domain.executor.ThreadExecutor;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ChangeSite;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.FindRobot;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetNode;
-import com.njrobot.huangyouqiang.redevicemanager.domain.executor.PostExecutorThread;
-import com.njrobot.huangyouqiang.redevicemanager.domain.executor.ThreadExecutor;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ResetView;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
 import com.njrobot.huangyouqiang.redevicemanager.domain.repository.WatchRepository;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.PerService;
 
-import java.lang.annotation.Retention;
-
-import javax.inject.Named;
-
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by huangyouqiang on 2016/8/10.
+ * @author huangyouqiang
+ * @date 2016/8/10
  */
 @Module
 public class WatchModule {
-
-    private String nodeId = "";
-    private String site = "";
 
     public WatchModule() {
     }

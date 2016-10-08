@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.NetworkConnectionException;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.ResponseNotCorrectException;
+import com.njrobot.huangyouqiang.redevicemanager.data.utils.LocalSavingManager;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.ParamsBeanEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
@@ -24,24 +25,24 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * Created by huangyouqiang on 2016/6/23.
+ * @author huangyouqiang
+ * @date 2016/6/23
  */
 public class RobotClient{
 	private static final String TAG = RobotClient.class.getSimpleName();
 	private static final String API_URL = "http://192.168.1.158:8080/overlord/";
-	private String serverIP;
 	private Context mContext;
 	private RobotApi robotApi;
 
 	public  RobotClient build(Context context){
 		this.mContext = context;
-		//this.serverIP = LocalSavingManager.getInstance(mContext).getServerIP();
+		String serverIP = LocalSavingManager.getInstance(mContext).getServerIP();
 		HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 		loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
 		Retrofit retrofit = new Retrofit.Builder()
 				.baseUrl(API_URL)
-		//		.baseUrl("http://"+this.serverIP+":8080/overlord/")
+				.baseUrl("http://"+ serverIP +":8080/overlord/")
 				.addConverterFactory(GsonConverterFactory.create())
 				.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 				.client(client)
@@ -52,7 +53,7 @@ public class RobotClient{
 
 	/**
 	 * 发送一个任务请求
-	 * @param reqSendMission
+	 * @param reqSendMission  a request contains send-mission info
      * @return 任务信息
      */
 	public Observable<MissionEntity> sendMission(ReqSendMission reqSendMission){
@@ -73,8 +74,8 @@ public class RobotClient{
 	}
     /**
 	 * 获取指定任务信息
-	 * @param reqMissionList
-	 * @param missionId
+	 * @param reqMissionList a request contains get-mission-list info
+	 * @param missionId target mission id
      */
 	public Observable<MissionEntity> getMission(final ReqMissionList reqMissionList, final int missionId){
 		Log.i("robotClient","getmission");
@@ -107,8 +108,8 @@ public class RobotClient{
 
 	/**
 	 * 获取任务列表
-	 * @param reqMissionList
-	 * @return
+	 * @param reqMissionList a request contains get-mission-list info
+	 * @return an Observable missionEntities
      */
 	public Observable<List<MissionEntity>> getMissionList(ReqMissionList reqMissionList){
 		return robotApi.getMissionList(reqMissionList)
@@ -127,8 +128,8 @@ public class RobotClient{
 
 	/**取消指定任务
 	 * qu
-	 * @param reqCancelMission
-	 * @return
+	 * @param reqCancelMission a request contains cancel-mission info
+	 * @return an Observable mission entity
      */
 	public Observable<MissionEntity> cancelMission(ReqCancelMission reqCancelMission){
 		if(isNetworkAvailable()) {
@@ -170,7 +171,7 @@ public class RobotClient{
 	}
 	/**
 	 * 判断当前网络连接是否可用
-	 * @return
+	 * @return if the network is available
      */
 	private boolean isNetworkAvailable(){
 		ConnectivityManager connectivityManager = (ConnectivityManager) this.mContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);

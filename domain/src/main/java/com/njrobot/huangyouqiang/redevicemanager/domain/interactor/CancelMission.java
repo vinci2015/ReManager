@@ -22,7 +22,7 @@ public class CancelMission extends UseCase {
     }
 
     public void resetParams(int id){
-        this.missionId = missionId;
+        this.missionId = id;
     }
     @Override
     protected Observable buildUseCaseObservable() {

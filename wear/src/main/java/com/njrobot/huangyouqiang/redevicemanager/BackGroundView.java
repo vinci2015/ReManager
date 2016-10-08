@@ -12,9 +12,11 @@ import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
- * Created by huangyouqiang on 2016/5/4.
+ * @author huangyouqiang
+ * @date 2016/5/4
  */
 public class BackGroundView extends View {
 	private static final String TEXT_SITE = "站 点 ";
@@ -73,10 +75,9 @@ public class BackGroundView extends View {
 		this.invalidate();
 	}
 	public void reFreshTime(){
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.CHINA);
 		Date date = new Date();
-		String dateStr = simpleDateFormat.format(date);
-		this.time = dateStr;
+		this.time = simpleDateFormat.format(date);
 		this.invalidate();
 	}
 }

@@ -11,13 +11,14 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Created by huangyouqiang on 2016/8/10.
+ * @author huangyouqiang
+ * @date 2016/8/10
  */
 public class WatchDataRepository implements WatchRepository {
     private WatchDataStore watchDataStore;
 
     @Inject
-    public WatchDataRepository(MobvoiApiClient mobvoiApiClient) {
+    WatchDataRepository(MobvoiApiClient mobvoiApiClient) {
         this.watchDataStore = new LocalWatchDataStore(mobvoiApiClient);
     }
 

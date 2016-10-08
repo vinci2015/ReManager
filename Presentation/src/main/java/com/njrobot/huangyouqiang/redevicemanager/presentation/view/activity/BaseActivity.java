@@ -11,7 +11,8 @@ import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.Appli
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module.ActivityModule;
 
 /**
- * Created by huangyouqiang on 2016/8/3.
+ * @author huangyouqiang
+ * @date 2016/8/3
  */
 public class BaseActivity extends AppCompatActivity {
 

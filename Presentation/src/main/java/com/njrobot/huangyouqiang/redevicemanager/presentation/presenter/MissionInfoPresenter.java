@@ -16,14 +16,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Created by huangyouqiang on 2016/8/3.
+ * @author huangyouqiang
+ * @date 2016/8/3
  */
-public class MissionInfoPresenter implements Presenter {
+class MissionInfoPresenter implements Presenter {
     private UseCase getMissionInfoUseCase;
     private MissionInfoView missionInfoView;
 
     @Inject
-    public MissionInfoPresenter(@Named("mission") UseCase getMissionInfoUseCase) {
+    MissionInfoPresenter(@Named("mission") UseCase getMissionInfoUseCase) {
         this.getMissionInfoUseCase = getMissionInfoUseCase;
     }
     public void setView(MissionInfoView view){

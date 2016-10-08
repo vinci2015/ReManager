@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-
 import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
 
 import java.io.ByteArrayInputStream;
@@ -12,19 +11,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
 
 /**
- * Created by huangyouqiang on 2016/5/3.
+ * @author huangyouqiang
+ * @date 2016/5/3
  */
 public class LocalSavingManager {
 	private static volatile LocalSavingManager instance = null;
-	private Context context;
 	private SharedPreferences localShare;
 
 	private LocalSavingManager(Context context){
-		localShare = context.getSharedPreferences(Constant.FILE_NAME,context.MODE_PRIVATE);
-		this.context  = context;
+		localShare = context.getSharedPreferences(Constant.FILE_NAME, Context.MODE_PRIVATE);
 	}
 
 	public static LocalSavingManager getInstance(Context context){
@@ -37,18 +34,18 @@ public class LocalSavingManager {
 		}
 		return instance;
 	}
-	public void setDistance(String distance){
+	/*public void setDistance(String distance){
 		SharedPreferences.Editor editor = localShare.edit();
 		editor.putString(Constant.ROBOT_DISTANCE,distance);
-		editor.commit();
+		editor.apply();
 	}
 	public String getDistance(){
 		return localShare.getString(Constant.ROBOT_DISTANCE,"");
-	}
+	}*/
 	public void setServerIP(String serverIP){
 		SharedPreferences.Editor editor = localShare.edit();
 		editor.putString(Constant.SERVER_IP,serverIP);
-		editor.commit();
+		editor.apply();
 	}
 	public String getServerIP(){
 		return localShare.getString(Constant.SERVER_IP,"");
@@ -56,15 +53,14 @@ public class LocalSavingManager {
 	public void setWatch(WatchModel watchModel){
 			SharedPreferences.Editor editor = localShare.edit();
 			editor.putString(watchModel.getId(), objectToString(watchModel));
-			editor.commit();
+			editor.apply();
 	}
 	public WatchModel getWatch(String id){
 		String result = localShare.getString(id,"");
-		if(result == ""){
+		if(result.equals("")){
 			return null;
 		}else {
-			WatchModel watchModel = stringToObject(result, WatchModel.class);
-			return watchModel;
+			return stringToObject(result);
 		}
 	}
 	public void addWatch(WatchModel watchModel){
@@ -72,7 +68,7 @@ public class LocalSavingManager {
 			setWatch(watchModel);
 		}
 	}
-	public String objectToString(Object object) {
+	private String objectToString(Object object) {
 		String result = "";
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream out = null;
@@ -86,9 +82,7 @@ public class LocalSavingManager {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (baos != null) {
-					baos.close();
-				}
+				baos.close();
 				if (out != null) {
 					out.close();
 				}
@@ -99,25 +93,18 @@ public class LocalSavingManager {
 		return result;
 	}
 
-	public <T> T stringToObject(String result, Class<T> clazz) {
+	private <T> T stringToObject(String result) {
 			byte[] buffer = Base64.decode(result, Base64.DEFAULT);
 			ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
 			ObjectInputStream ois = null;
 			try {
 				ois = new ObjectInputStream(bais);
-				T t = (T) ois.readObject();
-				return t;
-			} catch (StreamCorruptedException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+				return (T) ois.readObject();
+			} catch (ClassNotFoundException | IOException e) {
 				e.printStackTrace();
 			} finally {
 				try {
-					if (bais != null) {
-						bais.close();
-					}
+					bais.close();
 					if (ois != null) {
 						ois.close();
 					}

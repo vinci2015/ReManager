@@ -7,7 +7,8 @@ import com.mobvoi.android.common.MobvoiApiManager;
 import com.mobvoi.android.common.NoAvailableServiceException;
 
 /**
- * Created by huangyouqiang on 2016/5/20.
+ * @author huangyouqiang
+ * @date 2016/5/20
  */
 public class WearApplication extends Application {
 

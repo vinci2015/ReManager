@@ -8,7 +8,8 @@ import com.njrobot.huangyouqiang.redevicemanager.data.exception.ResponseNotCorre
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.SendMessageNotSuccessfulException;
 
 /**
- * Created by huangyouqiang on 2016/8/4.
+ * @author huangyouqiang
+ * @date 2016/8/4
  */
 public class ErrorMessageFactory {
 

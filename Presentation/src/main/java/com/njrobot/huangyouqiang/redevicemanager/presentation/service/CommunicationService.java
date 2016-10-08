@@ -31,7 +31,7 @@ import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ResetView;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.SendMission;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.AndroidApplication;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.ApplicationComponent;
-import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerMissionInfoServiceComponet;
+import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerMissionInfoServiceComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.component.DaggerWatchComponent;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module.MissionInfoModule;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module.WatchModule;
@@ -45,7 +45,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     private static final String TAG = CommunicationService.class.getSimpleName();
     @Inject MobvoiApiClient client;
 
-    //usecase
+    // dagger usecase
     @Inject GetNode getNode;
     @Inject ChangeSite changeSite;
     @Inject FindRobot findRobot;
@@ -61,11 +61,12 @@ public class CommunicationService extends WearableListenerService implements Mob
     private MissionEntity mMissionEntity;
     private boolean shouldStartRobot = false;// should  start to polling the robot status
     private boolean isDone = false; //if the mission is done
+    private boolean isCancleFromWatch = false; // if the watch had sent a cancel command
 
     private OnServiceMessageCallback callback;
     private Node remoteNode; //watch node
 
-
+    //dagger component
     private ApplicationComponent applicationComponent;
 
     public CommunicationService() {
@@ -79,13 +80,20 @@ public class CommunicationService extends WearableListenerService implements Mob
                 String site = new String(messageEvent.getData());
                 sendMission(site);
             }else {
-                // TODO: 2016/9/30 more info about current Task
                 Log.e(TAG,"is in mission, can not sent a new mission,current mission id is "+mMissionEntity.getId());
                 callback.sendMessage("当前有任务在执行");
             }
         }else if(messageEvent.getPath().equals(Constant.MESSAGE_CANCEL_MISSION)){
+            isCancleFromWatch  = true;
             cancelMission();
         }
+    }
+
+    private void resetMissionParam() {
+        mMissionEntity = null;
+        shouldStartRobot = false;
+        isDone = false;
+        isCancleFromWatch = false;
     }
 
     @Override
@@ -114,7 +122,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     public void onConnected(Bundle bundle) {
         Log.i(TAG,"onConnected()");
         Looper looper = Looper.myLooper();
-        Log.i(TAG," "+(looper == Looper.getMainLooper()));
+        Log.i(TAG," is in main looper : "+(looper == Looper.getMainLooper()));
         Wearable.MessageApi.addListener(client,this);
         Wearable.DataApi.addListener(client,this);
         Wearable.NodeApi.addListener(client,this);
@@ -140,11 +148,11 @@ public class CommunicationService extends WearableListenerService implements Mob
          * 检测到服务器端响应任务并开始running的回调
          * @param robotId 执行任务的机器人ID
          */
-        void onStartMission(int robotId);
+        void onExecuteMission(int robotId);
 
         /**
          * 发现并连接上一个手表的回调
-         * @param watchModel
+         * @param watchModel the model for a watch
          */
         void onFindWatch(WatchModel watchModel);
         void sendMessage(String s);
@@ -172,9 +180,13 @@ public class CommunicationService extends WearableListenerService implements Mob
         super.onCreate();
         Log.i(TAG,"onCreate()");
         initInjection();
-        this.client.registerConnectionCallbacks(this);
-        this.client.registerConnectionFailedListener(this);
-        this.client.connect();
+        try {
+            this.client.registerConnectionCallbacks(this);
+            this.client.registerConnectionFailedListener(this);
+            this.client.connect();
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -191,7 +203,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     private void initInjection(){
         applicationComponent = ((AndroidApplication)getApplication()).getApplicationComponent();
         DaggerWatchComponent.builder().applicationComponent(applicationComponent).watchModule(new WatchModule()).build().inject(this);
-        DaggerMissionInfoServiceComponet.builder().applicationComponent(applicationComponent)
+        DaggerMissionInfoServiceComponent.builder().applicationComponent(applicationComponent)
                 .missionInfoModule(new MissionInfoModule()).build().inject(this);
     }
     public void cancelMission(){
@@ -204,7 +216,7 @@ public class CommunicationService extends WearableListenerService implements Mob
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
+                Log.e(TAG,"cancel mission error");
             }
 
             @Override
@@ -226,7 +238,7 @@ public class CommunicationService extends WearableListenerService implements Mob
                 String errorMsg = ErrorMessageFactory.create(new DefaultErrorBundle((Exception) e).getException());
                 Log.i(TAG,"onError()"+errorMsg+e.getMessage());
                 e.printStackTrace();
-                // reSet the view on the watch
+                // reset the view on the watch
                 resetView(remoteNode.getId());
             }
 
@@ -235,6 +247,7 @@ public class CommunicationService extends WearableListenerService implements Mob
                 Log.i(TAG,"onNext()");
                 isInMission = true;
                 mMissionEntity = missionEntity;
+                isCancleFromWatch = false;
                 applicationComponent.threadExecutor().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -257,6 +270,7 @@ public class CommunicationService extends WearableListenerService implements Mob
                                     if(missionEntity.getStatus().getCode() == 8) {//means mission is running by the server
                                         shouldStartRobot = true;
                                         mMissionEntity = missionEntity;
+                                        callback.onExecuteMission(missionEntity.getRobotId());
                                     }
                                 }
                             });
@@ -265,7 +279,7 @@ public class CommunicationService extends WearableListenerService implements Mob
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                        }while (!shouldStartRobot);
+                        }while (!shouldStartRobot && !isCancleFromWatch);
                         //start polling the robot info to see if the robot is arriving the destination site
                         applicationComponent.threadExecutor().execute(new Runnable() {
                             @Override
@@ -298,30 +312,33 @@ public class CommunicationService extends WearableListenerService implements Mob
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-                                }while (!isDone);
+                                }while (!isDone && !isCancleFromWatch);
+                                // mission end , reset the params about the mission
+                                resetMissionParam();
                             }
                         });
                     }
                 });
-                // TODO: 2016/8/12 start a polling to check if the mission is running
             }
         });
     }
     public int calculateDistance(MissionEntity mission,RobotEntity robot){
         if(mission == null){
             Log.e(TAG,"mission entity is null");
+            return -1;
         }
         if(robot == null){
             Log.e(TAG," robot entity is null");
+            return -1;
         }
         if(!mission.getMissionPoints().isEmpty()) {
             PointInfoEntity finalPoint = mission.getMissionPoints().get(0).getMission_point().getPoint_info();
-            double posX =  ((finalPoint.getPos_x()-robot.getPosX()) / 1000);
-            double posY = (int) ((finalPoint.getPos_y()-robot.getPosY())/1000);
-            return (int) Math.sqrt(posX*posX+posY*posY);
+            double posX = ((finalPoint.getPos_x() - robot.getPosX()) / 1000);
+            double posY = (int) ((finalPoint.getPos_y() - robot.getPosY()) / 1000);
+            return (int) Math.sqrt(posX * posX + posY * posY);
         }else{
             Log.e(TAG,"mission points is null");
-            return Integer.MAX_VALUE;
+            return -1;
         }
     }
     public void changeSite(String nodeId,String site){
@@ -394,7 +411,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     }
     /**
      * 设置service的事件回调
-     * @param callback
+     * @param callback the callback in activity
      */
     public void setServiceCallback(OnServiceMessageCallback callback){
         this.callback  = callback;

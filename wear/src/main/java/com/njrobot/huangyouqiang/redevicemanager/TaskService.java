@@ -180,16 +180,20 @@ public class TaskService extends WearableListenerService implements MobvoiApiCli
         if(messageEvent.getPath().equals(Constant.COMMAND_FIND_ROBOT)){
             isFindRobot = true;
             mDistance = Integer.parseInt(new String(messageEvent.getData()));
-            Log.i(TAG,"on message received, "+mDistance);
-            if(mDistance == 0){
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                long [] pattern = {100,400,100,400};
-                vibrator.vibrate(pattern,-1);
-                isInMission = false;
-                isFindRobot = false;
-               // stopSelf();
+            if(mDistance == -1){
+                Toast.makeText(this,"距离信息出错",Toast.LENGTH_SHORT).show();
+            }else {
+                Log.i(TAG, "on message received, " + mDistance);
+                if (mDistance == 0) {
+                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    long[] pattern = {100, 400};
+                    vibrator.vibrate(pattern, -1);
+                    isInMission = false;
+                    isFindRobot = false;
+                    // stopSelf();
+                }
+                messageLister.onUpdateDistance(mDistance);
             }
-           messageLister.onUpdateDistance(mDistance);
         }else if(messageEvent.getPath().equals(Constant.MESSAGE_SEND_MISSION_FAILED)){
             Log.i(TAG,"receive send mission failed");
             isFindRobot = false;

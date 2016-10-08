@@ -7,7 +7,6 @@ import android.content.ServiceConnection;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -23,7 +22,6 @@ import com.njrobot.huangyouqiang.redevicemanager.presentation.view.adapter.Watch
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.component.BlurDialog;
 
 
-
 public class MainActivity extends BaseActivity implements MainView{
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -33,9 +31,10 @@ public class MainActivity extends BaseActivity implements MainView{
     private CommunicationService service;
     private Intent serviceIntent;
     private CommunicationService.OnServiceMessageCallback callback = new CommunicationService.OnServiceMessageCallback() {
-        @Override
-        public void onStartMission(int robotId) {
 
+        @Override
+        public void onExecuteMission(int robotId) {
+            sendMessage("mission is executing, robot id is "+robotId);
         }
 
         @Override
@@ -56,7 +55,6 @@ public class MainActivity extends BaseActivity implements MainView{
             service = ((CommunicationService.ServiceBinder)iBinder).getService();
             service.setServiceCallback(callback);
             mainPresenter.setService(service);
-            mainPresenter.getNode();
         }
 
         @Override
@@ -125,7 +123,7 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(binding.root,msg,Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override

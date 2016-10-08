@@ -14,7 +14,8 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * Created by huangyouqiang on 2016/5/5.
+ * @author huangyouqiang
+ * @date 2016/5/5
  */
 public class CallButton extends View {
 	private static final  String TAG = CallButton.class.getSimpleName();
@@ -25,6 +26,10 @@ public class CallButton extends View {
 	private Paint outerPaint;
 	private Paint innerBehindPaint;
 	private Paint textPaint;
+	private Paint scanPaint ;
+	private BlurMaskFilter blurMaskFilterOut;
+	private BlurMaskFilter blurMaskFilterSolid;
+	private Shader mSweepGradient;
 	private boolean isInCalling = false;//是否在呼叫
 	private boolean isFoundRobot = false;//是否找到了robot
 	private float radiusStep = 1f;//圆形涟漪动画中每次重绘时半径的增量
@@ -93,7 +98,11 @@ public class CallButton extends View {
 		starX = (float) (randomRadius*Math.cos(randomAngle));
 		starY = (float) (randomRadius*Math.sin(randomAngle));
 
+		scanPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+		blurMaskFilterOut = new BlurMaskFilter(10,BlurMaskFilter.Blur.OUTER);
+		blurMaskFilterSolid = new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID);
+		mSweepGradient = new SweepGradient(0, 0,new int[]{Color.argb(10,109, 185, 247),Color.argb(210,109,185,247)},new float[]{0,70/360f});
 	}
 
 
@@ -103,15 +112,13 @@ public class CallButton extends View {
 		canvas.translate(this.getWidth()/2,this.getHeight()/2);
 		if(!isInCalling) {
 			outerPaint.setColor(Color.argb(89, 109, 185, 247));
-			outerPaint.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.OUTER));
+			outerPaint.setMaskFilter(blurMaskFilterOut);
 		}else {
 			outerPaint.setColor(Color.rgb(41,154,228));
-			outerPaint.setMaskFilter(new BlurMaskFilter(10,BlurMaskFilter.Blur.SOLID));
+			outerPaint.setMaskFilter(blurMaskFilterSolid);
 		}
 		canvas.save();
 		if(isFoundRobot) {
-			Paint scanPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-			Shader mSweepGradient = new SweepGradient(0, 0,new int[]{Color.argb(10,109, 185, 247),Color.argb(210,109,185,247)},new float[]{0,70/360f});
 			scanPaint.setShader(mSweepGradient);
 			canvas.rotate(angelStep);
 			canvas.drawArc(new RectF(canvas.getClipBounds()),0,70,true,scanPaint);

@@ -8,7 +8,8 @@ import com.njrobot.huangyouqiang.redevicemanager.presentation.DI.module.Applicat
 import com.squareup.leakcanary.LeakCanary;
 
 /**
- * Created by huangyouqiang on 2016/8/3.
+ * @author huangyouqiang
+ * @date 2016/8/3
  */
 public class AndroidApplication extends Application {
     private ApplicationComponent applicationComponent;

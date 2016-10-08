@@ -17,7 +17,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by huangyouqiang on 2016/8/12.
+ * @author huangyouqiang
+ * @date 2016/8/12
  */
 @Module
 public class MissionInfoModule {

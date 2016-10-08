@@ -26,7 +26,8 @@ import com.njrobot.huangyouqiang.redevicemanager.presentation.view.component.Blu
 import java.util.ArrayList;
 
 /**
- * Created by huangyouqiang on 2016/8/5.
+ * @author huangyouqiang
+ * @date 2016/8/5
  */
 public class MainPresenter  extends BaseObservable implements Presenter{
     private MainView mainView;
@@ -69,21 +70,7 @@ public class MainPresenter  extends BaseObservable implements Presenter{
     public void setService(CommunicationService service){
         this.service = service;
     }
-   /* @Override
-    public void changeSite(WatchModel watchModel) {
-        if(this.service != null){
-            this.service.changeSite(watchModel.getId(),watchModel.getSite());
-        }
-    }*/
-    public void editServer(){
-        String defIP = localSavingManager.getServerIP();
-        this.mainView.Dialog("服务器IP", defIP, new BlurDialog.OnConfirmClickListener() {
-            @Override
-            public void onConfirm(View v, String content) {
-                
-            }
-        });
-    }
+
     public void setServerIP(String ip){
         if(!TextUtils.isEmpty(ip)) {
             this.serverIP = ip;
@@ -94,16 +81,11 @@ public class MainPresenter  extends BaseObservable implements Presenter{
     public void findWatch(WatchModel model){
         WatchModel localModel = localSavingManager.getWatch(model.getId());
         if(localModel == null){//preference 中没有存储这个watch
+
             localSavingManager.addWatch(model);
             adapter.addItem(model);
         }else{
             adapter.addItem(localModel);
-        }
-    }
-    public void getNode(){
-        if(this.service != null){
-            this.service.getNode();
-            notifyPropertyChanged(BR.serverIP);
         }
     }
     @Bindable
