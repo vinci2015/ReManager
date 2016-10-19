@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.data.utils.Constant;
 import com.njrobot.huangyouqiang.redevicemanager.data.utils.LocalSavingManager;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.BR;

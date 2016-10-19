@@ -142,7 +142,7 @@ public class BlurDialog extends Dialog {
 	 * @param radius
 	 * @return
 	 */
-	public static Bitmap fastblur(Bitmap sentBitmap, int radius) {
+	private static Bitmap fastblur(Bitmap sentBitmap, int radius) {
 
 		// Stack Blur v1.0 from
 		// http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html

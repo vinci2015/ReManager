@@ -1,6 +1,7 @@
-package com.njrobot.huangyouqiang.redevicemanager.domain.entity;
+package com.njrobot.huangyouqiang.redevicemanager.data.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.Robot;
 
 import java.util.List;
 
@@ -157,5 +158,14 @@ public class RobotEntity {
 
     public List<ParamsBeanEntity.DataBean> getProps() {
         return props;
+    }
+
+    public Robot transform(){
+        Robot robot = new Robot(getId());
+        robot.setPosX(getPosX());
+        robot.setPosY(getPosY());
+        robot.setStatus(getStatus().getCode());
+        robot.setStatusInfo(getStatus().getInfo());
+        return robot;
     }
 }

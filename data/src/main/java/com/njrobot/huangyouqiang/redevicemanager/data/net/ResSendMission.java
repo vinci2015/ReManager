@@ -1,7 +1,7 @@
 package com.njrobot.huangyouqiang.redevicemanager.data.net;
 
 import com.google.gson.annotations.SerializedName;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.MissionEntity;
 
 /**
  * @author huangyouqiang

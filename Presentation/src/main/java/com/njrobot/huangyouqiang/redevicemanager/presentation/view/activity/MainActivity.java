@@ -12,7 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.databinding.ActivityMainBinding;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MainPresenter;

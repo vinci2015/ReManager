@@ -1,4 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.domain.entity;
+package com.njrobot.huangyouqiang.redevicemanager.data.entity;
 
 /**
  * Created by huangyouqiang on 2016/6/23.
@@ -76,4 +76,5 @@ public class PointInfoEntity {
 	public ParamsBeanEntity getType() {
 		return type;
 	}
+
 }

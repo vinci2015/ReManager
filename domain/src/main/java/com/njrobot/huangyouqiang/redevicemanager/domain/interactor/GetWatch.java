@@ -11,17 +11,17 @@ import rx.Observable;
 /**
  * Created by huangyouqiang on 2016/8/10.
  */
-public class GetNode extends UseCase {
+public class GetWatch extends UseCase {
     private WatchRepository watchDataRepository;
 
     @Inject
-    public GetNode(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, WatchRepository watchDataRepository) {
+    public GetWatch(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, WatchRepository watchDataRepository) {
         super(threadExecutor, postExecutorThread);
         this.watchDataRepository = watchDataRepository;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.watchDataRepository.getNode();
+        return this.watchDataRepository.getWatch();
     }
 }

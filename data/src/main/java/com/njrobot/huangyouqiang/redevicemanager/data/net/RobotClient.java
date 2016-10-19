@@ -9,9 +9,9 @@ import com.google.gson.Gson;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.NetworkConnectionException;
 import com.njrobot.huangyouqiang.redevicemanager.data.exception.ResponseNotCorrectException;
 import com.njrobot.huangyouqiang.redevicemanager.data.utils.LocalSavingManager;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.ParamsBeanEntity;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.ParamsBeanEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.RobotEntity;
 
 import java.util.Collections;
 import java.util.List;

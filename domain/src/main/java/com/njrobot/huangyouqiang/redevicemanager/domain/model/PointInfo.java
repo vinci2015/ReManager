@@ -1,6 +1,5 @@
-package com.njrobot.huangyouqiang.redevicemanager.data.model;
+package com.njrobot.huangyouqiang.redevicemanager.domain.model;
 
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.PointInfoEntity;
 
 /**
  * Created by huangyouqiang on 2016/8/8.
@@ -37,15 +36,7 @@ public class PointInfo {
     public void setPosY(double posY) {
         this.posY = posY;
     }
-    public PointInfo transform(PointInfoEntity entity){
-        PointInfo pointInfo = null;
-        if(entity != null){
-            pointInfo = new PointInfo(entity.getName());
-            pointInfo.setPosX(entity.getPos_x());
-            pointInfo.setPosY(entity.getPos_y());
-        }
-        return pointInfo;
-    }
+
     @Override
     public String toString() {
         StringBuilder sb =new StringBuilder();

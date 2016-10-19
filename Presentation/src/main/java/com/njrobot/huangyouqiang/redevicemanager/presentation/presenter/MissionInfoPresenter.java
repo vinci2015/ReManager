@@ -3,13 +3,12 @@ package com.njrobot.huangyouqiang.redevicemanager.presentation.presenter;
 import android.os.Looper;
 import android.util.Log;
 
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.DefaultErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.ErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.DefaultSubscriber;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.exception.ErrorMessageFactory;
-import com.njrobot.huangyouqiang.redevicemanager.data.model.Mission;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.view.MissionInfoView;
 
 import javax.inject.Inject;
@@ -57,7 +56,7 @@ class MissionInfoPresenter implements Presenter {
         String errorMessage = ErrorMessageFactory.create(errorBundle.getException());
         this.missionInfoView.showError(errorMessage);
     }
-    private class GetMissionInfo extends DefaultSubscriber<MissionEntity>{
+    private class GetMissionInfo extends DefaultSubscriber<Mission>{
         @Override
         public void onCompleted() {
             Log.i("Presenter","onComplete()");
@@ -74,10 +73,9 @@ class MissionInfoPresenter implements Presenter {
         }
 
         @Override
-        public void onNext(MissionEntity entity) {
+        public void onNext(Mission entity) {
             Log.i("Presenter","onNext()"+(entity == null));
-            Mission mission = Mission.transform(entity);
-            missionInfoView.renderMission(mission);
+            missionInfoView.renderMission(entity);
         }
     }
 }

@@ -4,8 +4,8 @@ import com.njrobot.huangyouqiang.redevicemanager.data.net.ReqCancelMission;
 import com.njrobot.huangyouqiang.redevicemanager.data.net.ReqMissionList;
 import com.njrobot.huangyouqiang.redevicemanager.data.net.ReqRobot;
 import com.njrobot.huangyouqiang.redevicemanager.data.net.ReqSendMission;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.RobotEntity;
 
 import java.util.List;
 

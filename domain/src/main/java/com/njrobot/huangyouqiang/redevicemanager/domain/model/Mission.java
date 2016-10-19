@@ -1,6 +1,5 @@
-package com.njrobot.huangyouqiang.redevicemanager.data.model;
+package com.njrobot.huangyouqiang.redevicemanager.domain.model;
 
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
 
 /**
  * @author huangyouqiang
@@ -46,17 +45,6 @@ public class Mission {
 
     public void setDestinationSite(String destinationSite) {
         this.destinationSite = destinationSite;
-    }
-
-    public static Mission transform(MissionEntity entity){
-        Mission mission = null;
-        if(entity != null){
-            mission = new Mission(entity.getId());
-            mission.setUserId(entity.getUserId());
-            mission.setPriority(entity.getPriority());
-            mission.setDestinationSite(entity.getMissionPoints().get(0).getMission_point().getPoint_info().getName());
-        }
-        return mission;
     }
 
     @Override

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.WatchModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

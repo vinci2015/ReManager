@@ -1,6 +1,6 @@
 package com.njrobot.huangyouqiang.redevicemanager.presentation.view;
 
-import com.njrobot.huangyouqiang.redevicemanager.data.model.Mission;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.Mission;
 
 /**
  * Created by huangyouqiang on 2016/8/3.

@@ -1,4 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.domain.entity;
+package com.njrobot.huangyouqiang.redevicemanager.data.entity;
 
 import java.util.ArrayList;
 import java.util.List;

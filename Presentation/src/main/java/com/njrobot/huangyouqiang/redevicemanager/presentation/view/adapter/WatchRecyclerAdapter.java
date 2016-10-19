@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.BR;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.R;
 import com.njrobot.huangyouqiang.redevicemanager.presentation.presenter.MainPresenter;

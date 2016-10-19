@@ -1,6 +1,4 @@
-package com.njrobot.huangyouqiang.redevicemanager.data.model;
-
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
+package com.njrobot.huangyouqiang.redevicemanager.domain.model;
 
 /**
  * Created by huangyouqiang on 2016/8/8.
@@ -54,17 +52,6 @@ public class Robot {
 
     public void setStatusInfo(String statusInfo) {
         this.statusInfo = statusInfo;
-    }
-    public Robot transform(RobotEntity entity){
-        Robot robot = null;
-        if(entity != null){
-            robot = new Robot(entity.getId());
-            robot.setPosX(entity.getPosX());
-            robot.setPosY(entity.getPosY());
-            robot.setStatus(entity.getStatus().getCode());
-            robot.setStatusInfo(entity.getStatus().getInfo());
-        }
-        return robot;
     }
 
     @Override

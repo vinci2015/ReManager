@@ -4,7 +4,7 @@ import com.njrobot.huangyouqiang.redevicemanager.domain.executor.PostExecutorThr
 import com.njrobot.huangyouqiang.redevicemanager.domain.executor.ThreadExecutor;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ChangeSite;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.FindRobot;
-import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetNode;
+import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetWatch;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ResetView;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.UseCase;
 import com.njrobot.huangyouqiang.redevicemanager.domain.repository.WatchRepository;
@@ -27,7 +27,7 @@ public class WatchModule {
     @Provides
     @PerService
     UseCase provideNode(ThreadExecutor threadExecutor, PostExecutorThread postExecutorThread, WatchRepository watchDataRepository){
-        return  new GetNode(threadExecutor, postExecutorThread,watchDataRepository);
+        return  new GetWatch(threadExecutor, postExecutorThread,watchDataRepository);
     }
 
     @Provides

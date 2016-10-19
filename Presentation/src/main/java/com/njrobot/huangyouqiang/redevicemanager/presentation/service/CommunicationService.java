@@ -14,18 +14,18 @@ import com.mobvoi.android.wearable.MessageEvent;
 import com.mobvoi.android.wearable.Node;
 import com.mobvoi.android.wearable.Wearable;
 import com.mobvoi.android.wearable.WearableListenerService;
-import com.njrobot.huangyouqiang.redevicemanager.data.model.WatchModel;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.data.utils.Constant;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.MissionEntity;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.PointInfoEntity;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.RobotEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.MissionEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.PointInfoEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.RobotEntity;
 import com.njrobot.huangyouqiang.redevicemanager.domain.exception.DefaultErrorBundle;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.CancelMission;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ChangeSite;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.DefaultSubscriber;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.FindRobot;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetMissionDetails;
-import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetNode;
+import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetWatch;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.GetRobotDetails;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.ResetView;
 import com.njrobot.huangyouqiang.redevicemanager.domain.interactor.SendMission;
@@ -46,7 +46,8 @@ public class CommunicationService extends WearableListenerService implements Mob
     @Inject MobvoiApiClient client;
 
     // dagger usecase
-    @Inject GetNode getNode;
+    @Inject
+    GetWatch getWatch;
     @Inject ChangeSite changeSite;
     @Inject FindRobot findRobot;
     @Inject ResetView resetView;
@@ -64,7 +65,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     private boolean isCancleFromWatch = false; // if the watch had sent a cancel command
 
     private OnServiceMessageCallback callback;
-    private Node remoteNode; //watch node
+    private WatchModel remoteNode; //watch node
 
     //dagger component
     private ApplicationComponent applicationComponent;
@@ -131,7 +132,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     }
 
     public void getNode(){
-        getNode.execute(new SubGetNode());
+        getWatch.execute(new SubGetNode());
     }
     @Override
     public void onConnectionSuspended(int i) {
@@ -198,6 +199,7 @@ public class CommunicationService extends WearableListenerService implements Mob
         Wearable.NodeApi.removeListener(client,this);
         client.disconnect();
         callback = null;
+
     }
 
     private void initInjection(){
@@ -422,7 +424,7 @@ public class CommunicationService extends WearableListenerService implements Mob
     public boolean getIsInMission(){
         return isInMission;
     }
-    private class SubGetNode extends DefaultSubscriber<Node>{
+    private class SubGetNode extends DefaultSubscriber<WatchModel>{
         @Override
         public void onCompleted() {
             Log.i(TAG,"onCompleted()");
@@ -435,12 +437,12 @@ public class CommunicationService extends WearableListenerService implements Mob
         }
 
         @Override
-        public void onNext(Node o) {
+        public void onNext(WatchModel o) {
             Log.i(TAG,"onNext()");
             remoteNode  = o;
-            Log.i(TAG,o.getDisplayName());
+            Log.i(TAG,o.getName());
             if(callback != null) {
-                callback.onFindWatch(WatchModel.transformFromNode(o));
+                callback.onFindWatch(o);
             }
         }
     }

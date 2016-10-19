@@ -1,7 +1,7 @@
 package com.njrobot.huangyouqiang.redevicemanager.data.net;
 
 import com.google.gson.annotations.SerializedName;
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.ParamsBeanEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.ParamsBeanEntity;
 
 import java.util.ArrayList;
 import java.util.List;

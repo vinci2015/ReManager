@@ -1,6 +1,7 @@
-package com.njrobot.huangyouqiang.redevicemanager.domain.entity;
+package com.njrobot.huangyouqiang.redevicemanager.data.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.Mission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -252,5 +253,13 @@ public class MissionEntity {
 
 	public void setRoutePoints(List<PointInfoEntity> routePoints) {
 		this.routePoints = routePoints;
+	}
+
+	public Mission transform(){
+		Mission mission  = new Mission(getId());
+		mission.setUserId(getUserId());
+		mission.setPriority(getPriority());
+		mission.setDestinationSite(getMissionPoints().get(0).getMission_point().getPoint_info().getName());
+		return mission;
 	}
 }

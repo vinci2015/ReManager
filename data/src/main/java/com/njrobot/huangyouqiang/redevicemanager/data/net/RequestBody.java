@@ -1,6 +1,6 @@
 package com.njrobot.huangyouqiang.redevicemanager.data.net;
 
-import com.njrobot.huangyouqiang.redevicemanager.domain.entity.HeaderEntity;
+import com.njrobot.huangyouqiang.redevicemanager.data.entity.HeaderEntity;
 
 /**
  * @author huangyouqiang

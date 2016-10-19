@@ -4,11 +4,13 @@ import com.mobvoi.android.common.api.MobvoiApiClient;
 import com.mobvoi.android.wearable.Node;
 import com.njrobot.huangyouqiang.redevicemanager.data.repository.datasource.LocalWatchDataStore;
 import com.njrobot.huangyouqiang.redevicemanager.data.repository.datasource.WatchDataStore;
+import com.njrobot.huangyouqiang.redevicemanager.domain.model.WatchModel;
 import com.njrobot.huangyouqiang.redevicemanager.domain.repository.WatchRepository;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * @author huangyouqiang
@@ -23,8 +25,16 @@ public class WatchDataRepository implements WatchRepository {
     }
 
     @Override
-    public Observable<Node> getNode() {
-        return  this.watchDataStore.getNode();
+    public Observable<WatchModel> getWatch() {
+        return  this.watchDataStore.getNode()
+                .map(new Func1<Node, WatchModel>() {
+                    @Override
+                    public WatchModel call(Node node) {
+                        WatchModel watchModel = new WatchModel(node.getId());
+                        watchModel.setName(node.getDisplayName());
+                        return watchModel;
+                    }
+                });
     }
 
     @Override
